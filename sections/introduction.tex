@@ -7,14 +7,14 @@ Experimentalmente, la medida del momento de los high-$p_{T}$ muons plantea varia
 En presencia de un campo magn\'etico uniforme $B$, y con un radio de curvatura de la traza $R$, el momento transverso $p_{T}$ de un mu\'on con carga $q$ se puede expresar a trav\'es de la equaci\'on de Lorentz como:
 
 \begin{equation}
-  p_{T}[\text{GeV}] = \left|0.3 B[\text{T}] R[\text{m}] q\right|.
+  p_{T}[\text{GeV}] = \left|0.3 B[\text{T}] R[\text{m}] q\right|
 \label{eq:pTvsRadius}
 \end{equation}
 
 El campo campo magn\'etico dentro del solenoide de CMS es pr\'acticamente uniforme y conocido con gran precisi\'on ($B$ = 3.8 T), mientras que el radio de curvatura se relaciona con la longitud del arco $L$ y la distancia sagitta $s$ definida en la Figura \ref{fig:SagittaDef} de la traza a trav\'es de:
 
 \begin{equation}
-  R[\text{m}]\approx L[\text{m}]^{2}/8s[\text{m}],
+  R[\text{m}]\approx L[\text{m}]^{2}/8s[\text{m}]
 \label{eq:RadiusvsSagitta}
 \end{equation}
 
@@ -28,11 +28,11 @@ Donde dicha aproximaci\'on es v\'alida para $L/R \ll 1$. Combinando las ecuacion
 \begin{figure}
 \centering
 \includegraphics[width=0.30\textwidth]{figures/curvaturesketch.png}
-\caption{Definici\'on de la distancia saggita, $s$, a partir de la longitud de la traza reconstruida $L$ y de su radio $R$}
+\caption{Definici\'on de la distancia saggita, $s$, a partir de la longitud de la traza reconstruida $L$ y de su radio $R$.}
 \label{fig:SagittaDef}
 \end{figure}
 
-Se observa que $s$ es inversamente proporcional al momento transverso, por lo que para mejorar la resoluci\'on en la medida del momento en los casos con sagittas pequeñas, las trazas de los muones en CMS se reconstruyen en distintos subdetectores separados a varios metros del punto de colisi\'on, como se detallar\'a en la Secci\'on \ref{CMS}, para as\'i tener trazas de mayor longitud y por tanto mayores sagittas. Sin embargo, aunque esto mejora considerablemente la resoluci\'on en la medida de $p_{T}$, sagitta sigue siendo pequeña para muones de muy alto momento en la escala del TeV, y adem\'as $s$ se puede ver afectada por fallos en el alineamiento de los hits de la traza.
+Se observa que $s$ es inversamente proporcional al momento transverso, por lo que para mejorar la resoluci\'on en la medida del momento en los casos con sagittas pequeñas, las trazas de los muones en CMS se reconstruyen en distintos subdetectores separados a varios metros del punto de colisi\'on, como se detallar\'a en la Secci\'on \ref{sec:CMS}, para as\'i tener trazas de mayor longitud y por tanto mayores sagittas. Sin embargo, aunque esto mejora considerablemente la resoluci\'on en la medida de $p_{T}$, sagitta sigue siendo pequeña para muones de muy alto momento en la escala del TeV, y adem\'as $s$ se puede ver afectada por fallos en el alineamiento de los hits de la traza.
 
 Por otra parte, cuando los muones de alto momento atraviesan el hierro tienen alto momento, $p_{T} > {\cal O}(200~$ GeV), las p\'erdidas de energ\'ia por radiaci\'on tales como producci\'on de pares, Bremsstrahlung, o interacciones fotonucleares no son despreciables comparadas con la p\'erdida de energ\'ia por ionizaci\'on. En la Figura~\ref{fig:dEdX} se muestra la p\'erdida de energ\'a  por unidad de distancia $dE/dx$ para muones atravesando hidr\'ogeno, hierro y uranio como funci\'on de su energ\'ia.
 
@@ -45,18 +45,15 @@ Por otra parte, cuando los muones de alto momento atraviesan el hierro tienen al
 
 Se observa que la energ\'ia cr\'itica para el hierro, $E^{iron}_{c}$, donde la energ\'ia de ionizaci\'on (en marr\'on) es igual a la suma de todas las p\'erdidas radiativas (en morado) ocurre aproximadamente en 300 GeV. Como consecuencia, la principal fuente de p\'erdida de energ\'a para un mu\'on con $E>E^{iron}_{c}$ que viaja por hierro a trav\'es de los distintos subdetectores de CMS es debida a radiaci\'on electromagn\'etica fruto de la producci\'on de electrones y fotones. Esta radiaci\'on electromagn\'etica es llamada cascada (muon shower) y puede generar hits adicionales en los detectores que normalmente afectan negativamente a la reconstrucci\'on de la traza, as\'i como cambios en la direcci\'on de la trayectoria del mu\'on, degradando por tanto la medida de su momento.
 
-Los algoritmos de reconstrucci\'on de la traza que son utilizados para la asignaci\'on del momento de los mu\'ones en CMS evitan lidiar con casos de showering, como se explicar\'a con m\'as detalle en la Secci\'on \ref{current_assignment}. De esta manera, por ejemplo, si se encuentran varios hits en un subdetector que puedan ser indicativo de que una cascada ha tenido lugar, t\'ipicamente se ignoran estos hits a la hora de reconstruir la traza del mu\'on. El objetivo de este trabajo es recopilar toda la informaci\'on posible de la trayectoria del mu\'on a su paso por CMS (incluyendo los hits provenientes de cascadas electromagn\'eticas), y entrenar posteriormente una red neuronal profunda o DNN que haga regresi\'on al $p_{T}$, de manera que se consiga una asignaci\'on de momento mejor que la proporcionada centralmente por los algoritmos de asignaci\'on de momento de CMS.
+Los algoritmos de reconstrucci\'on de la traza que son utilizados para la asignaci\'on del momento de los mu\'ones en CMS evitan lidiar con casos de showering, como se explicar\'a con m\'as detalle en la Secci\'on \ref{sec:current_assignment}. De esta manera, por ejemplo, si se encuentran varios hits en un subdetector que puedan ser indicativo de que una cascada ha tenido lugar, t\'ipicamente se ignoran estos hits a la hora de reconstruir la traza del mu\'on. El objetivo de este trabajo es recopilar toda la informaci\'on posible de la trayectoria de los muones a su paso por CMS (incluyendo los hits provenientes de cascadas electromagn\'eticas) utilizando para ello muones de alto momento simulados con $p_{T}$ generado conocido, y entrenar posteriormente una red neuronal profunda o DNN que haga regresi\'on al $p_{T}$ reconstruido tras el paso de los muones por el detector, de manera que se consiga una asignaci\'on de momento mejor que la proporcionada por los algoritmos de asignaci\'on de momento de CMS.
 
-La memoria est\'a estructurada en las siguientes secciones. En la Secci\'on~\ref{CMS} se describir\'a brevemente el dispositivo experimental utilizado: el detector CMS. Posteriormente, en la Secci\'on~\ref{current_assignment} se presentar\'an los algoritmos actuales utilizados para la asignaci\'on de momento. En la Secci\'on~\ref{methodology} se describir\'a el m\'etodo propuesto, c\'omo se realiza la selecci\'on de muones y hits, as\'i como la muestra de simulaci\'on de Monte-Carlo utilizada. En la Secci\'on~\ref{training} se detallar\'a c\'omo se construyen las variables de entrenamiento, la arquitectura de la red utilizada y se mostrar\'an los gr\'aficos de control del entrenamiento. Por \'ultimo, en las Secciones~\ref{results} y \ref{conclusions} se mostrar\'an los resultados finales y las conclusiones del trabajo.
+Para cuantificar la calidad de la asignaci\'on del momento transverso, se har\'a uso de la resoluci\'on $R$, definida como:
 
+\begin{equation}
+  R = \dfrac{\lvert p_{T}^{GEN} - p_{T}^{RECO}\rvert}{p_{T}^{RECO}}
+\label{eq:R}
+\end{equation}
 
+Donde $p_{T}^{GEN}$ hace referencia al momento generado del mu\'on y $p_{T}^{RECO}$ al momento reconstruido a trav\'es de su traza en el detector.
 
-%% Taking a simulated $Z'$ sample, the momemtum resolution can be measured as: 
-
-%% \begin{equation}
-%% \ensuremath{R_{\mathrm{reco}\textrm{-}\mathrm{gen}}} =
-%% \frac{(q/p)^{\mathrm{reco}} - (q/p)^{\mathrm{gen}}}{(q/p)^{\mathrm{gen}}}
-%% \label{resolution}
-%% \end{equation}
-
-%% where $q/p$ corresponds to the muon charge divided by its momentum.
+La memoria est\'a estructurada en las siguientes secciones. En la Secci\'on~\ref{sec:CMS} se describir\'a brevemente el dispositivo experimental utilizado: el detector CMS. Posteriormente, en la Secci\'on~\ref{sec:current_assignment} se presentar\'an los algoritmos actuales utilizados para la asignaci\'on de momento. En la Secci\'on~\ref{sec:methodology} se describir\'a el m\'etodo propuesto, c\'omo se realiza la selecci\'on de muones y hits, as\'i como la muestra de simulaci\'on de Monte-Carlo utilizada. En la Secci\'on~\ref{sec:training} se detallar\'a c\'omo se construyen las variables de entrenamiento, la arquitectura de la red utilizada y se mostrar\'an los gr\'aficos de control del entrenamiento. Por \'ultimo, en las Secciones~\ref{sec:results} y \ref{sec:conclusions} se mostrar\'an los resultados finales y las conclusiones del trabajo.
