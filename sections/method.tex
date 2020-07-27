@@ -8,16 +8,43 @@ En la presente secci\'on se detallar\'an las herramientas y metodolog\'ia utiliz
 
 \subsection{Herramientas utilizadas para el an\'alisis}\label{sec:tools}
 
-links a Repositorios, CMSSW, root, pandas... etc
+Las herramientas utilizadas en el proceso de an\'alisis de los datos son las siguientes:
 
+\begin{itemize}
+
+\item CMSSW~\cite{cmssw} es una colecci\'on de software abierto utilizado principalmente para la hacer simulaci\'on, calibraci\'on, alineamiento, y reconstrucci\'on de objetos f\'isicos para el posterior an\'alisis de los datos. Para este trabajo se ha creado un c\'odigo en C++ que puede encontrarse en el repositorio~\cite{analyzer}. Este c\'odigo usa los m\'odulos de CMSSW para hacer la selecci\'on de muones y segmentos que se describir\'a en la secci\'on~\ref{sec:selection}. 
+
+\item ROOT~\cite{root} es el marco de trabajo m\'as utilizado f\'isica de altas energ\'ias para el procesado de datos, an\'alisis estad\'istico, y herramientas de visualizaci\'on y almacenamiento de los datos. ROOT est\'a basado en programaci\'on orientada a objetos y escrito en C++, y se usar\'a como formato de los datos de entrada y salida del c\'odigo de selecci\'on~\cite{analyzer}.
+
+\item Pandas~\cite{mckinney-proc-scipy-2010} (del ingl\'es \textit{Python Data Analysis Library}), es una librer\'ia de Python que ofrece gran rendimiento en el procesado de estructuras tabulares de datos. En este caso, se usar\'a Pandas, previa transformaci\'on de los datos en formato ROOT a csv, para el procesado de los segmentos seleccionados (operaciones de limpiado de segmentos, agregaciones, construcci\'on de las variables de entrenamiento...etc). Los m\'odulos creados para el procesado pueden encontrarse en \cite{processor}.
+
+\end{itemize}
+
+
+El proceso l\'ogico de trabajo en cuanto a las herramientas utilizadas y al formato de los datos se muestra en el siguiente diagrama de fases: \\
+
+\begin{center}
+\smartdiagramset{border color=none,
+   text width=3cm, font=\fontsize{10pt}{12pt}\selectfont,
+   module x sep=4.0,     
+   back arrow disabled=true}
+\smartdiagram[flow diagram:horizontal]{Datos de simulaci\'on de entrada (formato ROOT),
+  Selecci\'on de muones y segmentos (c\'odigo \cite{analyzer} en C++ con salida en formato ROOT),
+  Tranformaci\'on de ROOT a texto (reader.py en \cite{processor}),
+  Procesado de datos con Pandas: limpiado y construcci\'on de variables (doStep1.py y step2.py en \cite{processor})}
+\end{center}
 
 \subsection{Selecci\'on de muones y segmentos}\label{sec:selection}
 
+En los datos de entrada, Los muones reconstruidos por evento se almacenan en colecciones de ROOT, que funcionan a modo de contenedor de informaci\'on.
 
-Definir segmentos
+Las c\'amaras DT y CSC se componen de varias capas, y las señales o hits que dejan los muones a su paso se reconstruyen en cada cada de ellas. A partir de estos hits por c\'amara, se construyen trazas rectas denominadas segmentos dentro de cada c\'amara DT o CSC. Al igual que en el caso de los muones, los segmentos en un evento se almacenan tambi\'en en colecciones de ROOT.
 
-FILL ME
 
+
+\subsection{Procesado y construcci\'on de variables}\label{sec:procesado}
+
+FILLME
 
 \subsection{Muestra de simulaci\'on utilizada}\label{sec:sample}
 
@@ -31,6 +58,7 @@ En la Figura~\ref{fig:data_pt} se muestran las distribuciones del $p_{T}$ genera
 \caption{Distribuciones del momento transverso de los muones de la muestra de simulaci\'on utilizada. Izquierda: $p_{T}$ generado. Derecha: $p_{T}$ proporcionado por el algoritmo TuneP.}
 \label{fig:data_pt}        
 \end{figure}
+
 
 \subsection{Distribuciones de control}\label{sec:plots}
 
