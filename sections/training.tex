@@ -1,18 +1,19 @@
 
-Una vez obtenida toda la informaci\'on posible del mu\'on a su paso por CMS, el objetivo es entrenar una red neuronal profunda tomando como entrada la informaci\'on de la traza en el tracker y la informaci\'on espacial de las señales recogidas en el sistema de muones, como el n\'umero de hits y la desviaci\'on standard espacial en cada estaci\'on. En este caso, la funci\'on de p\'erdida a minimizar ser\'a  \\
+Una vez obtenida toda la informaci\'on posible del mu\'on a su paso por CMS, el objetivo es entrenar una red neuronal profunda tomando como entrada la informaci\'on de la traza en el tracker y la informaci\'on espacial de las señales recogidas en el sistema de muones, como el n\'umero de hits y la desviaci\'on standard espacial en cada estaci\'on. En este caso, la funci\'on de p\'erdida a minimizar ser\'a  una funci\'on que dependa de la diferencia entre el $p_{T}$ de generaci\'on y el $p_{T}$ que se quiere predecir para as\'i aprender las caracter\'isticas de los muones y hacer regresi\'on al momento transverso reconstruido. \\
 
-Keras
+Para el entrenamiento se utilizar\'a la librer\'ia de Python de c\'odigo abierto Keras~\cite{chollet2015keras}, que se caracteriza principalmente por ofrecer sencillez de uso para el usuario, y la red se ejecutar\'a sobre TensorFlow~\cite{tensorflow2015-whitepaper}.. 
 
 
 
-\subsection{Variables de entrenamiento}\label{variables}
+\subsection{Variables de entrenamiento}\label{sec:variables}
+
+Informaci\'on por mu\'on
+
+
+\subsection{Arquitectura}\label{sec:arch}
 
 TEST
 
-\subsection{Arquitectura}\label{arch}
-
-TEST
-
-\subsection{Resultados del entrenamiento}\label{trainresults}
+\subsection{Resultados del entrenamiento}\label{sec:trainresults}
 
 TEST
