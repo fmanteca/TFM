@@ -1,7 +1,7 @@
 
 Dado que el objetivo del trabajo es mejorar la asignaci\'on de momento para muones high-$p_{T}$, especialmente para los casos con showering, el primer aspecto que se ha de tener en cuenta es recopilar toda la informaci\'on posible del mu\'on (incluyendo los hits que provienen de las cascadas), en contraposici\'on a la estrategia de los distintos refits descritos en la Secci\'on~\ref{sec:current_assignment}, que tratan de encontrar aquellas c\'amaras donde es probable que haya tenido lugar una cascada para despu\'es eliminar la informaci\'on de dichas c\'amaras a la hora de hacer la reconstrucci\'on de la traza del mu\'on.
 
-De esta manera, el procedimiento que se va a seguir para recoger toda la informaci\'on posible es extrapolar la traza del mu\'on medida en el tracker a las c\'amaras de muones, para despu\'es recoger todo el conjunto de hits que se encuentren en torno al punto extrapolaci\'on recogiendo as\'i todas las señales que produzca la posible cascada. \\
+De esta manera, el procedimiento que se va a seguir para recoger toda la informaci\'on posible es extrapolar la traza del mu\'on medida en el tracker a las c\'amaras de muones, para despu\'es recoger todo el conjunto de hits que se encuentren en torno al punto extrapolaci\'on recogiendo as\'i todas las se\~nales que produzca la posible cascada. \\
 
 En la presente secci\'on se detallar\'an las herramientas y metodolog\'ia utilizadas para el tratamiento de los datos.
 
@@ -51,8 +51,16 @@ En la Figura~\ref{fig:data_pt} se muestran las distribuciones del $p_{T}$ genera
 
 \subsection{Selecci\'on de muones y segmentos}\label{sec:selection}
 
-En los datos de entrada, Los muones reconstruidos por evento se almacenan en colecciones de ROOT, que funcionan a modo de contenedor de informaci\'on. 
+El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer}) de la muestra de Monte-Carlo para el posterior an\'alisis consta de las siguientes fases: 
 
+\begin{enumerate}
+\item Lectura de datos: En los datos de entrada, los muones y segmentos reconstruidos por evento se almacenan en colecciones de ROOT, que funcionan a modo de contenedor de informaci\'on. 
+\item Bucle sobre los muones
+\item Bucle sobre los segmentos en el evento: guardamos sus coordenadas y la geomdet en la que se encuentran si ``valid''
+\item Extrapolaci\'on a las geomdets
+\item Selecci\'on de las extrapolaciones si ``valid''
+\item Guardado de todas las variables almacenadas como objetos de ROOT.
+\end{enumerate}
 
 \begin{table}[htbp]
   \begin{center}
@@ -72,8 +80,6 @@ En los datos de entrada, Los muones reconstruidos por evento se almacenan en col
     \label{tab:muon_sel}
   \end{center}
 \end{table}
-
-
 
 
 \begin{table}[htbp]
@@ -97,7 +103,6 @@ En los datos de entrada, Los muones reconstruidos por evento se almacenan en col
 \end{table}
 
 
-
 \begin{table}[htbp]
   \begin{center}
     {\normalsize
@@ -108,7 +113,7 @@ En los datos de entrada, Los muones reconstruidos por evento se almacenan en col
         \hline
         Propagaci\'on          & isValid()==1                                                                 \\
         Propagaci\'on          & Hacia delante                                                                \\
-        Propagaci\'on          & dist(extrapolaci\'on, centro de c\'amara) $\leq$ tamaño de c\'amara      \\
+        Propagaci\'on          & dist(extrapolaci\'on, centro de c\'amara) $\leq$ tama\~no de c\'amara      \\
         \hline
       \end{tabular}
     }
@@ -120,45 +125,41 @@ En los datos de entrada, Los muones reconstruidos por evento se almacenan en col
 
 
 
-Las c\'amaras DT y CSC se componen de varias capas, y las señales o hits que dejan los muones a su paso se reconstruyen en cada cada de ellas. A partir de estos hits por c\'amara, se construyen trazas rectas denominadas segmentos dentro de cada c\'amara DT o CSC. Al igual que en el caso de los muones, los segmentos en un evento se almacenan tambi\'en en colecciones de ROOT.
-
-
-
 \subsection{Procesado y construcci\'on de variables}\label{sec:procesado}
 
 Como se ha mencionado en la secci\'on anterior, las propagaciones se hacen a planos de dimensiones infinitas, y a pesar de la selecci\'on en distancia de la Tabla~\ref{tab:prop_sel} a\'un se tienen algunas extrapolaciones que caen en agujeros o fuera de los l\'imites espaciales de CMS. En primera aproximaci\'on, para un mejor limpiado, se han definido circunferencias conc\'entricas en el plano xy, con radio Rxy en cent\'imetros, para limpiar la gran mayor\'ia de estas extrapolaciones. 
 
-Una extrapolaci\'on en las DTs es eliminada del conjunto de datos si (Rxy$>$810.) \'o (Rxy $>$ 470. y Rxy $<$ 490.) \'o (Rxy $>$ 555. y  Rxy $<$ 590.) \'o (Rxy $>$ 670 y Rxy $<$ 690.); mientras que si se encuentra en las CSCs, se elimina si Rxy$>$720. En las Figuras~\ref{fig:segments_pos} y \ref{fig:props_pos} se muestran las posiciones espaciales de los segmentos y la propagaciones en los planos xy y xz.
+Una extrapolaci\'on en las DTs es eliminada del conjunto de datos si (Rxy$>$810.) \'o (Rxy $>$ 470. y Rxy $<$ 490.) \'o (Rxy $>$ 555. y  Rxy $<$ 590.) \'o (Rxy $>$ 670 y Rxy $<$ 690.); mientras que si se encuentra en las CSCs, se elimina si Rxy$>$720. En las Figuras~\ref{fig:segments_pos} y \ref{fig:props_pos} se muestran las posiciones espaciales de los segmentos y la propagaciones en los planos xy y xz una vez realizado el limpiado. \\
 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.2\textwidth]{figures/Hits_DT_xy_postCleaning.png}
-\includegraphics[width=0.2\textwidth]{figures/Hits_DT_xz_boarders.png}
-\includegraphics[width=0.2\textwidth]{figures/Hits_CSC_xy_boarders.png}
-\includegraphics[width=0.2\textwidth]{figures/Hits_CSC_xz_boarders.png}
-\caption{Posiciones geom\'etricas de todos los segmentos seleccionados. Arriba izquierda: . Arriba derecha: . Abajo izquierda: . Abajo derecha: }
+\includegraphics[width=0.4\textwidth]{figures/Hits_DT_xy_postCleaning.png}
+\includegraphics[width=0.4\textwidth]{figures/Hits_DT_xz_boarders.png}
+\includegraphics[width=0.4\textwidth]{figures/Hits_CSC_xy_boarders.png}
+\includegraphics[width=0.4\textwidth]{figures/Hits_CSC_xz_boarders.png}
+\caption{Posiciones geom\'etricas de todos los segmentos seleccionados. Arriba izquierda: Segmentos en DTs en el plano xy. Arriba derecha: Segmentos en DTs en el plano xz. Abajo izquierda: Segmentos en CSCs en el plano xy. Abajo derecha: Segmentos en CSCs en el plano xz.}
 \label{fig:segments_pos}
 \end{figure}
 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.2\textwidth]{figures/Props_DT_xy_postCleaning.png}
-\includegraphics[width=0.2\textwidth]{figures/Props_DT_xz_boarders.png}
-\includegraphics[width=0.2\textwidth]{figures/Props_CSC_xy_boarders.png}
-\includegraphics[width=0.2\textwidth]{figures/Props_CSC_xz_boarders.png}
-\caption{Posiciones geom\'etricas de todos las propagaciones seleccionadas. Arriba izquierda: . Arriba derecha: . Abajo izquierda: . Abajo derecha: }
+\includegraphics[width=0.4\textwidth]{figures/Props_DT_xy_postCleaning.png}
+\includegraphics[width=0.4\textwidth]{figures/Props_DT_xz_boarders.png}
+\includegraphics[width=0.4\textwidth]{figures/Props_CSC_xy_boarders.png}
+\includegraphics[width=0.4\textwidth]{figures/Props_CSC_xz_boarders.png}
+\caption{Posiciones geom\'etricas de todos los propagaciones seleccionados. Arriba izquierda: Propagaciones en DTs en el plano xy. Arriba derecha: Propagaciones en DTs en el plano xz. Abajo izquierda: Propagaciones en CSCs en el plano xy. Abajo derecha: Propagaciones en CSCs en el plano xz.}
 \label{fig:props_pos}
 \end{figure}
 
+Para la construcci\'on de las variables que ser\'an utilizadas en el entrenamiento se usan agregaciones de Pandas (ver doStep1.py en \cite{processor}). De esta manera, para cada mu\'on se agregan los segmentos encontrados en cada estaci\'on de DT y CSC y se obtiene el n\'umero de segmentos en cada estaci\'on, la media espacial de los segmentos, la distribuci\'on est\'andard, la asimetr\'ia y la kurtosis.
 
-Pandas para variables, c\'omo se construyen
 
 
 \subsection{Distribuciones de control}\label{sec:plots}
 
-Se han realizado varias comprobaciones para asegurarnos que los datos tienen sentido. En primer lugar, se seleccionan muones con cuatro o m\'as segmentos en las DTs y adem\'as se require que tengan al menos un segmento en cada estaci\'on. Posteriormente, se separan los muones que cumplan estas condiciones en dos categor\'ias: aquellos que tienen exactamente cuatro segmentos (uno en cada estaci\'on), y aquellos que tienen m\'as de cuatro segmentos, donde los segmentos adicionales pueden provenir de cascadas. De esta manera, si para cada mu\'on se selecciona el m\'aximo valor de distancia entre el segmento y la propagaci\'on, uno esperar\'ia que la distribuci\'on de valores m\'aximos de distancias pique a valores m\'as bajos en la categor\'ia de cuatro segmentos que en la categor\'ia de m\'as de cuatro segmentos, y que se tenga una cola m\'as alargada en la segunda categor\'ia. Estas distribuciones se muestran en la Figura~\ref{fig:data_dist}.
+Se han realizado varias comprobaciones para asegurarnos que los datos tienen sentido. En primer lugar, se seleccionan muones con cuatro o m\'as segmentos en las DTs y adem\'as se require que tengan al menos un segmento en cada estaci\'on. Posteriormente, se separan los muones que cumplan estas condiciones en dos categor\'ias: aquellos que tienen exactamente cuatro segmentos (uno en cada estaci\'on), y aquellos que tienen m\'as de cuatro segmentos, donde los segmentos adicionales pueden provenir de cascadas. De esta manera, si para cada mu\'on se selecciona el m\'aximo valor de distancia entre el segmento y la propagaci\'on, uno esperar\'ia que la distribuci\'on de valores m\'aximos de distancias pique a valores m\'as bajos en la categor\'ia de cuatro segmentos que en la categor\'ia de m\'as de cuatro segmentos, y que se tenga una cola m\'as alargada en la segunda categor\'ia. Estas distribuciones se muestran en la Figura~\ref{fig:data_dist}. \\
 
 \begin{figure}[h]
 \centering
@@ -168,7 +169,7 @@ Se han realizado varias comprobaciones para asegurarnos que los datos tienen sen
 \end{figure}
 
 
-Por otra parte, en la Figura~\ref{fig:data_nSegmentsMean} se muestra la distribuci\'on de la media del n\'umero de segmentos por mu\'on en funci\'on del $p_{T}$ de generaci\'on. Se observa en este caso que hay una clara tendencia ascendente del promedio del n\'umero de segmentos con el $p_{T}$, ya que como se indic\'o en la secci\'on~\ref{sec:intro}, a mayor $p_{T}$ mayor es la probabilidad de que el mu\'on emita una cascada y se reconstruyan por tanto m\'as señales en las c\'amaras.
+Por otra parte, en la Figura~\ref{fig:data_nSegmentsMean} se muestra la distribuci\'on de la media del n\'umero de segmentos por mu\'on en funci\'on del $p_{T}$ de generaci\'on. Se observa en este caso que hay una clara tendencia ascendente del promedio del n\'umero de segmentos con el $p_{T}$, ya que como se indic\'o en la secci\'on~\ref{sec:intro}, a mayor $p_{T}$ mayor es la probabilidad de que el mu\'on emita una cascada y se reconstruyan por tanto m\'as se\~nales en las c\'amaras.
 
 
 \begin{figure}[h]
