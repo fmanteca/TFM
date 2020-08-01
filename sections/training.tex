@@ -32,9 +32,9 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo fully-conect
 
 \begin{itemize}
 
-\item Activaci\'on: ReLu~\cite{agarap2018deep} en las capas 1-9; Lineal en la capa 10 para hacer regresi\'on al $p_{T}$.
+\item Activaci\'on: ReLu~\cite{agarap2018deep} en las capas 1-9; Lineal en la \'ultima capa 10 para hacer regresi\'on al $p_{T}$.
 
-\item Optimizador: Adam (lr=0.0005)~\cite{Kingma2015AdamAM}.
+\item Como optimizador se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el Gradient Descent con momento con el Gradient descent con RMSprop, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
 
 \item Funci\'on de p\'erdida: Mean Square Error.
 
