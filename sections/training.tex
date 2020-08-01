@@ -32,9 +32,9 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo fully-conect
 
 \begin{itemize}
 
-\item Activaci\'on: ReLu para las capas 1-9. Lineal para la capa 10 (regresi\'on).
+\item Activaci\'on: ReLu~\cite{agarap2018deep} en las capas 1-9; Lineal en la capa 10 para hacer regresi\'on al $p_{T}$.
 
-\item Optimizador: Adam (lr=0.0005).
+\item Optimizador: Adam (lr=0.0005)~\cite{Kingma2015AdamAM}.
 
 \item Funci\'on de p\'erdida: Mean Square Error.
 
@@ -42,7 +42,7 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo fully-conect
 
 \item Batch size: 2000.
 
-\item Early stopping en la p\'erdida del dataset de validaci\'on con paciencia de 50 \'epocas.
+\item Early stopping en la p\'erdida del dataset de validaci\'on con paciencia de 50 \'epocas. De esta manera, para cada \'epoca se obtiene el valor del MSE en el conjunto de datos de validaci\'on (que no se utilizan para entrenar), y se guarda el modelo con menor MSE en validaci\'on. El entrenamiento se detinene si el MSE no ha mejorado en 50 \'epocas despu\'es del valor m\'inimo encontrado, evitando as\'i que el modelo sobreentrene.
 
 \end{itemize}
 

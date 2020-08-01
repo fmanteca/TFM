@@ -54,12 +54,12 @@ En la Figura~\ref{fig:data_pt} se muestran las distribuciones del $p_{T}$ genera
 El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer}) de la muestra de Monte-Carlo para el posterior an\'alisis consta de las siguientes fases: 
 
 \begin{enumerate}
-\item Lectura de datos: En los datos de entrada, los muones y segmentos reconstruidos por evento se almacenan en colecciones de ROOT, que funcionan a modo de contenedor de informaci\'on. 
-\item Bucle sobre los muones
-\item Bucle sobre los segmentos en el evento: guardamos sus coordenadas y la geomdet en la que se encuentran si ``valid''
-\item Extrapolaci\'on a las geomdets
-\item Selecci\'on de las extrapolaciones si ``valid''
-\item Guardado de todas las variables almacenadas como objetos de ROOT.
+\item Lectura de datos: En los datos de entrada, los muones y segmentos reconstruidos por evento se almacenan en colecciones de ROOT, que funcionan a modo de contenedor de informaci\'on. Por tanto el primer paso es leer las colecciones para poder iterar sobre ellas. 
+\item Se recorre la colecci\'on de muones y se seleccionan aquellos que cumplen con los requisitos recogidos en la Tabla~\ref{tab:muon_sel}. Se pide que los muones tengan traza reconstruida en el tracker con $p_{T} >$ 200 GeV, y que esta traza reconstruida est\'e pr\'oxima a la traza generada del mu\'on dentro de un cono $\Delta$R = $\sqrt{(\Delta\eta^{2}+\Delta\phi^{2})} <$  0.3.
+\item Posteriormente, se recorren todos los segmentos en el evento, y se almacenan sus coordenadas y los detectores en los que se encuentran si cumplen los requisitos registrados en la Tabla~\ref{tab:segment_sel}. B\'asicamente, se pide que los segmentos sean v\'alidos y se hayan medido correctamente sus coordenadas.
+\item Se selecciona el estado m\'as externo de la traza del tracker y se extrapola (siguiendo la trayectoria de la traza y teniendo en cuenta el momento magn\'etico del solenoide de CMS) a la superficie de cada uno de los detectores guardados donde se ha encontrado al menos un segmento.
+\item Se seleccionan aquellas extrapolaciones que cumplen los cortes de la Tabla~\ref{tab:prop_sel}. Se pide que las extrapolaciones sean v\'alidas, vayan en la direcci\'on del momento, y que la distancia entre el centro de la c\'amara y la extrapolaci\'on sea menor del tamaño de la c\'amara. Este \'ultimo requerimento es muy importante porque las superficies a las que se extrapola son planos de dimensi\'on infinita, y una part\'icula cargada que se curva debido a un campo magn\'etico siempre puede cortar un plano de dimensi\'on infinita.
+\item Se guardan todas las variables almacenadas como objetos de ROOT, es decir, la informaci\'on sobre la traza del tracker, las coordenadas de los segmentos recogidos, y las coordenadas de las extrapolaciones.
 \end{enumerate}
 
 \begin{table}[htbp]
@@ -117,7 +117,7 @@ El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer
         \hline
       \end{tabular}
     }
-    \caption{Selecci\'on aplicada sobre las propagaciones.}
+    \caption{Selecci\'on aplicada sobre las propagaciones. ``dist'' hace referencia a la distancia eucl\'idea.}
     \label{tab:prop_sel}
   \end{center}
 \end{table}
