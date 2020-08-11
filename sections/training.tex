@@ -1,7 +1,8 @@
 
-Una vez obtenida toda la informaci\'on posible del mu\'on a su paso por CMS, el objetivo es entrenar una red neuronal profunda tomando como entrada la informaci\'on de la traza en el tracker y la informaci\'on espacial de las se\~nales recogidas en el sistema de muones, como el n\'umero de hits y la desviaci\'on standard espacial en cada estaci\'on. En este caso, la funci\'on de p\'erdida a minimizar ser\'a  una funci\'on que dependa de la diferencia entre el $p_{T}$ de generaci\'on y el $p_{T}$ que se quiere predecir, para as\'i aprender las caracter\'isticas de los muones y hacer regresi\'on al momento transverso reconstruido. \\
+Una vez obtenida toda la informaci\'on posible del mu\'on a su paso por CMS, el objetivo es entrenar una red neuronal profunda tomando como entrada la informaci\'on de la traza en el tracker y la informaci\'on espacial de las se\~nales recogidas en el sistema de muones. \\
+En este caso, la funci\'on de p\'erdida a minimizar ser\'a una funci\'on que dependa de la diferencia entre el $p_{T}$ de generaci\'on conocido y el $p_{T}$ que se quiere predecir, para as\'i aprender las caracter\'isticas de los muones (especialmente de aquellos que emitan cascadas) y hacer regresi\'on al momento transverso reconstruido. \\
 
-Para el entrenamiento se utilizar\'a la librer\'ia de Python de c\'odigo abierto Keras~\cite{chollet2015keras}, que se caracteriza principalmente por ofrecer sencillez de uso para el usuario, y la red se ejecuta sobre TensorFlow~\cite{tensorflow2015-whitepaper}.
+En cuanto al software, para el entrenamiento se utiliza la librer\'ia de Python de c\'odigo abierto Keras~\cite{chollet2015keras}, que se caracteriza principalmente por ofrecer sencillez de uso para el usuario, y la red se ejecuta sobre TensorFlow~\cite{tensorflow2015-whitepaper}.
 
 
 \subsection{Variables de entrenamiento}\label{sec:variables}
@@ -13,7 +14,7 @@ Las variables utilizadas para el entrenamiento se dividen en dos categor\'ias se
 \item Informaci\'on del conjunto de segmentos recogidos en cada estaci\'on de DTs y CSCs: n\'umero total de segmentos en la estaci\'on, media espacial en x, y, z, desviaci\'on est\'andard en x, y, z, asimetr\'ia en x, y, z, kurtosis en x, y, z.
 \end{itemize}
 
-En la Figura~\ref{fig:train_vars} se muestran las distribuciones de las variables provenientes de la traza del tracker y de las estaciones de las DTs.
+En la Figura~\ref{fig:train_vars} se muestran las distribuciones de las variables utilizadas en el entrenamiento provenientes de la traza del tracker y de las estaciones de las DTs.
 
 \begin{figure}
 \centering
@@ -46,12 +47,13 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{full
 
 \end{itemize}
 
-El valor de los hiperpar\'ametros se ha tomado tras probar distintas configuraciones aleatorias de los mismos en los entrenamientos (b\'usqueda de tipo cuadr\'icula), y se ha elegido aquella que proporciona un MSE menor en el conjunto de datos de testeo.
+El valor de los hiperpar\'ametros se ha tomado tras probar distintas configuraciones aleatorias de los mismos (b\'usqueda de tipo cuadr\'icula), y se ha elegido aquella que proporciona un MSE menor en el conjunto de datos de testeo.
   
 
 \subsection{Resultados del entrenamiento}\label{sec:trainresults}
 
-En la Figura~\ref{fig:model_loss} se muestra la el valor de la p\'erdida del MSE en funci\'on de la \'epoca de entrenamiento. El mejor modelo de obtiene despu\'es de 184 \'epocas, con un valor de p\'erdida para el conjunto de datos de entrenamiento de 49605.3, para el conjunto de datos de validaci\'on de 50399.8, y para el conjunto de datos de testeo de 53731.6.  \\
+En la Figura~\ref{fig:model_loss} se muestra la el valor de la p\'erdida MSE en funci\'on de la \'epoca de entrenamiento. \\
+El mejor modelo de obtiene despu\'es de 184 \'epocas, con un valor de p\'erdida para el conjunto de datos de entrenamiento de 49605.3, para el conjunto de datos de validaci\'on de 50399.8, y para el conjunto de datos de testeo de 53731.6.  \\
 
 \begin{figure}[h]
 \centering

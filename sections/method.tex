@@ -11,7 +11,9 @@ Las herramientas utilizadas en el proceso de an\'alisis de los datos son las sig
 
 \begin{itemize}
 
-\item CMSSW~\cite{cmssw} es una colecci\'on de software abierto utilizado principalmente para la hacer simulaci\'on, calibraci\'on, alineamiento, y reconstrucci\'on de objetos f\'isicos para el posterior an\'alisis de los datos. Para este trabajo se ha creado un c\'odigo en C++ que puede encontrarse en el repositorio~\cite{analyzer}. Este c\'odigo usa los m\'odulos de CMSSW para realizar la selecci\'on apropiada de muones y segmentos que se describir\'a en la subsecci\'on~\ref{sec:selection}. 
+\item MadGraph~\cite{Alwall:2014hca} es un programa que tiene como objetivo proporcionar todos los elementos necesarios para la simulaci\'on de la fenomenolog\'ia de procesos f\'isicos tanto dentro del Modelo Est\'andard de la f\'isica de part\'iculas como fuera del mismo. Se utilizar\'a MadGraph para generar una muestra representativa de muones de alto momento para su posterior an\'alisis. Las macroinstrucciones usadas para la simulaci\'on de la muestra se pueden encontrar en el repositorio~\cite{generator}.
+
+\item CMSSW~\cite{cmssw} es una colecci\'on de software abierto utilizado principalmente para la simulaci\'on, calibraci\'on, alineamiento, y reconstrucci\'on de objetos f\'isicos para el posterior an\'alisis de los datos. Para este trabajo se ha creado un c\'odigo en C++ que puede encontrarse en \cite{analyzer}. Este c\'odigo usa los m\'odulos de CMSSW para realizar la selecci\'on apropiada de muones y segmentos que se describir\'a en la subsecci\'on~\ref{sec:selection}. 
 
 \item ROOT~\cite{root} es el marco de trabajo m\'as utilizado f\'isica de altas energ\'ias para el procesado de datos, para an\'alisis estad\'istico, y proporciona adem\'as herramientas de visualizaci\'on y almacenamiento de los mismos. ROOT est\'a basado en programaci\'on orientada a objetos y escrito en C++, y se usar\'a como formato de los datos de entrada y salida del c\'odigo de selecci\'on~\cite{analyzer}.
 
@@ -28,19 +30,19 @@ El proceso l\'ogico de trabajo en cuanto a las herramientas utilizadas y al form
    text width=3cm, font=\fontsize{10pt}{12pt}\selectfont,
    module x sep=4.0,     
    back arrow disabled=true}
-\smartdiagram[flow diagram:horizontal]{Datos de simulaci\'on de entrada (formato ROOT),
+\smartdiagram[flow diagram:horizontal]{Eventos de simulaci\'on obtenidos con Madgraph (salida en formato ROOT),
   Selecci\'on de muones y segmentos (c\'odigo \cite{analyzer} en C++ con salida en formato ROOT),
-  Tranformaci\'on de ROOT a texto (reader.py en \cite{processor}),
+  Tranformaci\'on de ROOT a formato texto (reader.py en \cite{processor}),
   Procesado de datos con Pandas: limpiado y construcci\'on de variables (doStep1.py y step2.py en \cite{processor})}
 \end{center}
 
 
 \subsection{Muestra de simulaci\'on utilizada}\label{sec:sample}
 
-Se han generado un total de 100000 eventos de $Z'$ con $m_{Z'}$ = 5000 GeV fruto de la colisiones prot\'on-prot\'on a una energ\'ia de centro de masas de 13 TeV (condiciones actuales del acelerador LHC) mediante simulaci\'on de Monte-Carlo utilizando el programa MadGraph5~\cite{Alwall:2014hca}. \\
-Se impone que las part\'iculas $Z'$ generadas se desintegren a un par de muones de carga opuesta $\mu^{+}\mu^{-}$, y se simula el paso de dichos muones por el detector CMS con el paquete Geant4~\cite{Agostinelli:2002hh}. De esta manera se tiene una muestra con estad\'istica razonable de muones altamente energ\'eticos con $p_{T}$ generado conocido que se usar\'a para el entrenamiento supervisado de la DNN. \\
+Se han generado un total de 100000 eventos de $Z'$ con $m_{Z'}$ = 5000 GeV fruto de la colisiones prot\'on-prot\'on a una energ\'ia de centro de masas de 13 TeV\footnote{condiciones actuales de funcionamiento del acelerador LHC} mediante simulaci\'on de Monte-Carlo utilizando MadGraph5. \\
+Se impone que las part\'iculas $Z'$ generadas se desintegren a un par de muones de carga opuesta $\mu^{+}\mu^{-}$, y se simula el paso de dichos muones por el detector CMS con el paquete Geant4~\cite{Agostinelli:2002hh} (ver \cite{generator}). \\
 
-En la Figura~\ref{fig:data_pt} se muestran las distribuciones del $p_{T}$ generado y el $p_{T}$ proporcionado por el algoritmo TuneP de todos los muones de la muestra que pasan la selecci\'on detallada en la subsecci\'on~\ref{sec:selection}.
+Con esta muestra de simulaci\'on se tiene una estad\'istica razonable de muones altamente energ\'eticos con $p_{T}$ generado conocido que se usar\'a para el entrenamiento supervisado de la red neuronal. En la Figura~\ref{fig:data_pt} se muestran las distribuciones del $p_{T}$ generado y el $p_{T}$ proporcionado por el algoritmo TuneP de todos los muones de la muestra que pasan la selecci\'on detallada en la subsecci\'on~\ref{sec:selection}.
 
 \begin{figure}[h]
 \centering
@@ -55,7 +57,7 @@ En la Figura~\ref{fig:data_pt} se muestran las distribuciones del $p_{T}$ genera
 El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer}) de la muestra de Monte-Carlo para el posterior an\'alisis consta de las siguientes fases: 
 
 \begin{enumerate}
-\item Lectura de datos: En los datos de entrada, los muones y segmentos reconstruidos por evento se almacenan en colecciones de ROOT, que funcionan a modo de contenedor de informaci\'on. Por tanto, el primer paso es leer las colecciones para poder iterar sobre ellas. 
+\item Lectura de datos: en los datos de entrada, los muones y segmentos reconstruidos por evento se almacenan en colecciones de ROOT, que funcionan a modo de contenedor de informaci\'on. Por tanto, el primer paso es leer las colecciones para poder iterar sobre ellas. 
 \item Se recorre la colecci\'on de muones y se seleccionan aquellos que cumplen con los requisitos recogidos en la Tabla~\ref{tab:muon_sel}. Se pide que los muones tengan traza reconstruida en el tracker con $p_{T} >$ 200 GeV, y que esta traza reconstruida est\'e pr\'oxima a la traza generada del mu\'on dentro de un cono $\Delta$R = $\sqrt{(\Delta\eta^{2}+\Delta\phi^{2})} <$  0.3.
 \item Posteriormente, se recorren las colecciones de segmentos encontradas en el evento, y se almacenan sus coordenadas y los identificadores de los detectores en los que se encuentran si cumplen los requisitos registrados en la Tabla~\ref{tab:segment_sel}. Esencialmente, se pide que los segmentos sean v\'alidos\footnote{Que son compatibles con la trayectoria inicial, con un $\chi$\textsuperscript{2} no muy elevado, y adem\'as el detector est\'a funcionando correctamente en el momento de la medida}, y se hayan medido correctamente sus coordenadas.
 \item Se selecciona el estado m\'as externo de la traza del tracker y se extrapola (siguiendo la trayectoria de la traza y teniendo en cuenta el momento magn\'etico del solenoide de CMS) a la superficie de cada uno de los detectores registrados donde se ha encontrado al menos un segmento.
@@ -129,7 +131,7 @@ El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer
 \subsection{Procesado y construcci\'on de variables}\label{sec:procesado}
 
 Como se ha mencionado en la secci\'on anterior, las propagaciones se hacen a planos de dimensiones infinitas, y a pesar de la selecci\'on en distancia de la Tabla~\ref{tab:prop_sel} a\'un se tienen algunas extrapolaciones que caen en agujeros o fuera de los l\'imites espaciales de CMS. \\
-En primera aproximaci\'on y con el fin de mejorar la calidad y coherencia de los datos, se han definido circunferencias conc\'entricas en el plano xy, con radio Rxy en cent\'imetros, para limpiar la gran mayor\'ia de estas extrapolaciones. De esta manera, Una extrapolaci\'on en las DTs es eliminada del conjunto de datos si (Rxy$>$810.) \'o (Rxy $>$ 470. y Rxy $<$ 490.) \'o (Rxy $>$ 555. y  Rxy $<$ 590.) \'o (Rxy $>$ 670 y Rxy $<$ 690.); mientras que si se encuentra en las CSCs, se elimina si Rxy$>$720. \\
+En primera aproximaci\'on y con el fin de mejorar la calidad y coherencia de los datos, se han definido circunferencias conc\'entricas en el plano xy, con radio Rxy en cent\'imetros, para limpiar la gran mayor\'ia de estas extrapolaciones. De esta manera, una extrapolaci\'on en las DTs es eliminada del conjunto de datos si (Rxy$>$810.) \'o (Rxy $>$ 470. y Rxy $<$ 490.) \'o (Rxy $>$ 555. y  Rxy $<$ 590.) \'o (Rxy $>$ 670 y Rxy $<$ 690.); mientras que si se encuentra en las CSCs, se elimina si Rxy$>$720. \\
 
 En las Figuras~\ref{fig:segments_pos} y \ref{fig:props_pos} se muestran las posiciones espaciales de los segmentos y la propagaciones en los planos xy y xz una vez realizado el limpiado. \\
 
@@ -155,15 +157,16 @@ En las Figuras~\ref{fig:segments_pos} y \ref{fig:props_pos} se muestran las posi
 \label{fig:props_pos}
 \end{figure}
 
-Para la construcci\'on de las variables que ser\'an utilizadas en el entrenamiento se usan agregaciones de Pandas (ver doStep1.py en \cite{processor}). De esta manera, para cada mu\'on se agregan los segmentos encontrados en cada estaci\'on de DT y CSC y se obtiene el n\'umero de segmentos en cada estaci\'on, la media espacial de los segmentos, la distribuci\'on est\'andard, la asimetr\'ia y la kurtosis.
+Para la construcci\'on de las variables que ser\'an utilizadas en el entrenamiento se usan agregaciones de Pandas (ver doStep1.py en \cite{processor}). As\'i, para cada mu\'on se agregan los segmentos encontrados en cada estaci\'on de DTs y CSCs y se obtiene el n\'umero total de segmentos por estaci\'on, la media espacial de los segmentos, la desviaci\'on est\'andard de los mismos, la asimetr\'ia y la kurtosis.
 
 
 
 \subsection{Distribuciones de control}\label{sec:plots}
 
-Se han realizado varias comprobaciones para asegurarnos que los datos que se utilizar\'an en el entrenamiento tienen sentido. \\
+Se han realizado varias comprobaciones para asegurarnos de que los datos que se utilizar\'an en el entrenamiento tienen sentido. \\
 
-En primer lugar, se seleccionan muones con cuatro o m\'as segmentos en las DTs y adem\'as se require que tengan al menos un segmento en cada estaci\'on. Posteriormente, se separan los muones que cumplan estas condiciones en dos categor\'ias: aquellos que tienen exactamente cuatro segmentos (uno en cada estaci\'on), y aquellos que tienen m\'as de cuatro segmentos, donde los segmentos adicionales pueden provenir de cascadas. De esta manera, si para cada mu\'on se selecciona el m\'aximo valor de distancia entre el segmento y la propagaci\'on, uno esperar\'ia que la distribuci\'on de valores m\'aximos de distancias pique a valores m\'as bajos en la categor\'ia de cuatro segmentos que en la categor\'ia de m\'as de cuatro segmentos, y que se tenga una cola m\'as alargada en la segunda categor\'ia. Estas distribuciones se muestran en la Figura~\ref{fig:data_dist}. \\
+En la primera de ellas, se seleccionan muones con cuatro o m\'as segmentos en las DTs y adem\'as se require que tengan al menos un segmento en cada estaci\'on. Posteriormente, se separan los muones que cumplan estas condiciones en dos categor\'ias: aquellos que tienen exactamente cuatro segmentos (uno en cada estaci\'on), y aquellos que tienen m\'as de cuatro segmentos, donde los segmentos adicionales pueden provenir de cascadas electromagn\'eticas. De esta manera, si para cada mu\'on se selecciona el m\'aximo valor de distancia entre el segmento y la propagaci\'on, uno esperar\'ia que la distribuci\'on de valores m\'aximos de distancias pique a valores m\'as bajos en la categor\'ia de cuatro segmentos que en la categor\'ia de m\'as de cuatro segmentos, y que se tenga una cola m\'as alargada en la segunda categor\'ia. \\
+Las distribuciones para ambos grupos se muestran en la Figura~\ref{fig:data_dist}. \\
 
 \begin{figure}[h]
 \centering
