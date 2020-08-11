@@ -25,9 +25,9 @@ En la Figura~\ref{fig:train_vars} se muestran las distribuciones de las variable
 
 \subsection{Conjunto de datos y arquitectura de la red}\label{sec:arch}
 
-El conjunto de datos, compuesto por un total de 195777 muones, se ha dividido en un 80\% para el entrenamiento del modelo (del que un 10\% ser\'a usado como dataset de validaci\'on), mientras que un 20\% es utilizado para el testeo del mismo. \\
+El conjunto de datos, compuesto por un total de 195777 muones, se ha dividido en un 80\% para el entrenamiento del modelo (del que un 10\% ser\'a usado como conjunto de datos de validaci\'on), mientras que un 20\% es utilizado para el testeo del mismo. \\
 
-En cuanto al tipo de red utilizada, se ha entrenado una red de tipo fully-conected donde todos los nodos de cada capa est\'an conectados con los nodos de las capas contiguas, con la siguiente arquitectura:
+En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{fully-conected}, donde todos los nodos de cada capa est\'an conectados con los nodos de las capas contiguas, con la siguiente arquitectura:
 
 
 \begin{itemize}
@@ -42,10 +42,12 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo fully-conect
 
 \item Descenso del gradiente: para agilizar el apredizaje se hace uso de la t\'ecnica del \textit{mini-batch gradient descent}~\cite{perrone2019optimal}, que consiste en dividir el conjunto de datos de entrenamiento en fragmentos peque\~nos denominados \textit{mini-batches}, de manera que los par\'ametros de la red se van actualizando para cada fragmento sin tener que recorrer toda la muestra, mejorando considerablemente la velocidad en el entrenamiento y consiguiendo una buena convergencia. El tama\~no del mini-batch elegido ha sido de 2000 muones.
 
-\item Early stopping en la p\'erdida del dataset de validaci\'on con paciencia de 50 \'epocas. De esta manera, para cada \'epoca se obtiene el valor del MSE en el conjunto de datos de validaci\'on (que no se utilizan para entrenar), y se guarda el modelo con menor MSE en validaci\'on. El entrenamiento se detinene si el MSE no ha mejorado en 50 \'epocas despu\'es del valor m\'inimo encontrado, evitando as\'i que el modelo sobreentrene.
+\item Para regularizar se utiliza la t\'ecnica de \textit{Early stopping} en la p\'erdida del conjunto de datos de validaci\'on, con una paciencia de 50 \'epocas. De esta manera, para cada \'epoca se obtiene el valor del MSE en el conjunto de datos de validaci\'on (que no se utilizan para entrenar). Si el MSE no mejora despu\'es de 50 \'epocas se guarda el modelo encontrado con menor MSE en validaci\'on y se detiene el entrenamiento para evitar as\'i que el modelo sobreentrene. 
 
 \end{itemize}
 
+El valor de los hiperpar\'ametros se ha tomado tras probar distintas configuraciones aleatorias de los mismos en los entrenamientos (b\'usqueda de tipo cuadr\'icula), y se ha elegido aquella que proporciona un MSE menor en el conjunto de datos de testeo.
+  
 
 \subsection{Resultados del entrenamiento}\label{sec:trainresults}
 
@@ -64,7 +66,7 @@ En la Figura~\ref{fig:R_predicted} se comparan la distribuciones de la resoluci\
 \begin{figure}[h]
 \centering
 \includegraphics[width=1.0\textwidth]{figures/R_predicted.png}
-\caption{Distribuci\'on de la resoluci\'on R sobre el conjunto de datos de testeo. Izquierda: tomando el $p_{T}$ que da el algoritmo TuneP. Derecha: tomando el $p_{T}$ predicho por el modelo de regresi\'on al $p_{T}$.}
+\caption{Distribuci\'on de la resoluci\'on R dada por \eqref{eq:R} sobre el conjunto de datos de testeo. Izquierda: tomando el $p_{T}$ que da el algoritmo TuneP. Derecha: tomando el $p_{T}$ predicho por el modelo de regresi\'on al $p_{T}$.}
 \label{fig:R_predicted}        
 \end{figure}
 

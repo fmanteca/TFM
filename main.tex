@@ -9,7 +9,7 @@
 \usepackage[spanish]{babel}
 
 \setlength{\parindent}{0pt}
-
+\usepackage{xcolor}
 
 \begin{document}
 
@@ -44,18 +44,51 @@
 \end{titlepage}
 
 
+\newpage
 
-\begin{abstract}
-   Español
-\end{abstract}
+\null\hfill\begin{tabular}[t]{l@{}}
+  \textit{Para los agradecimientos} \\
+  \textit{Para los agradecimientos} \\
+  \textit{Para los agradecimientos} \\
+  \textit{Para los agradecimientos} \\
+  \textit{Para los agradecimientos} \\
+  \textit{Para los agradecimientos} \\
+\end{tabular}
 
-\begin{abstract}
-   Ingl\'es
-\end{abstract}
+
+%% \section*{Agradecimientos}
+
+%% HOLA
 
 \newpage
 
 \tableofcontents
+
+\newpage
+
+\begin{abstract}
+El objetivo de este trabajo es aplicar t\'ecnicas de aprendizaje autom\'atico profundo supervisado para la asignación de momento transverso a muones altamente energ\'eticos en el experimento CMS (\textit{Compact Muon Solenoid}) del LHC (\textit{Large Hadron Collider}) mediante regresi\'on, teniendo como principal meta mejorar los resultados del procedimiento actual, y de ser as\'i plantear incluir este tipo de metodolog\'ias de manera oficial en la futura toma de datos del experimento (Run 3). \\
+
+Para el entrenamiento se ha utilizado una muestra de simulaci\'on Monte-Carlo, donde una part\'icula masiva se desintegra a muones de las caracter\'isticas buscadas, de manera que el algoritmo predictivo se alimenta de la informaci\'on que estos muones dejan a su paso por el detector CMS. \\
+
+{\color{red}FILL ME: RESULTADOS} \\
+
+\textbf{Palabras clave:} aprendizaje autom\'atico profundo, muones altamente energ\'eticos, CMS \\ \\ \\
+
+\end{abstract}
+
+
+\begin{abstract}
+The aim of this work is to apply supervised deep machine learning techniques for the assignment of transverse moment to highly energetic muons in the CMS (\textit{Compact Muon Solenoid}) experiment at LHC (\textit{Large Hadron Collider}) collider through regression, with the main goal of improving the results of the current procedure, and if so, consider including this type of methodologies officially in the future data taking of the experiment (Run 3). \\
+
+For the training, a Monte-Carlo simulation sample has been used, where a massive particle decays into muons of the desired characteristics, so that the predictive algorithm feeds on the information that these muons leave as they pass through the CMS detector. \\
+
+{\color{red}FILL ME: RESULTADOS} \\
+
+\textbf{Key words:} deep learning, highly energetic muons, CMS \\
+
+\end{abstract}
+
 
 \newpage
 
@@ -65,7 +98,7 @@
 
 \newpage
 
-\section{El detector CMS}\label{sec:CMS}
+\section{El experimento CMS}\label{sec:CMS}
 
 \subfile{sections/CMS}
 
