@@ -33,7 +33,7 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{full
 
 \begin{itemize}
 
-\item Activaci\'on: Para las capas 1-9 se utliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo por tener siempre derivada 1 y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 10 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al $p_{T}$.
+\item Activaci\'on: Para las capas 1-9 se utiliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo por tener siempre derivada igual a la unidad y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 10 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al $p_{T}$.
 
 \item Como optimizador se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el Gradient Descent con momento con el Gradient descent con RMSprop, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
 
