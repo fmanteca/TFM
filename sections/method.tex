@@ -11,14 +11,16 @@ Las herramientas utilizadas en el proceso de an\'alisis de los datos son las sig
 
 \begin{itemize}
 
-\item MadGraph~\cite{Alwall:2014hca} es un programa que tiene como objetivo proporcionar todos los elementos necesarios para la simulaci\'on de la fenomenolog\'ia de procesos f\'isicos tanto dentro del Modelo Est\'andard de la f\'isica de part\'iculas como fuera del mismo. Se utilizar\'a MadGraph para generar una muestra representativa de muones de alto momento para su posterior an\'alisis. Las macroinstrucciones usadas para la simulaci\'on de la muestra se pueden encontrar en el repositorio~\cite{generator}.
+\item MadGraph~\cite{Alwall:2014hca} es un programa que tiene como objetivo proporcionar todos los elementos necesarios para la simulaci\'on de la fenomenolog\'ia de procesos f\'isicos tanto dentro del Modelo Est\'andard de la f\'isica de part\'iculas como fuera del mismo. \\
+Se utilizar\'a MadGraph para generar una muestra representativa de muones de alto momento para su posterior an\'alisis. Las macroinstrucciones usadas para la simulaci\'on de la muestra se pueden encontrar en el repositorio~\cite{generator}.
 
-\item CMSSW~\cite{cmssw} es una colecci\'on de software abierto utilizado principalmente para la simulaci\'on, calibraci\'on, alineamiento, y reconstrucci\'on de objetos f\'isicos para el posterior an\'alisis de los datos. Para este trabajo se ha creado un c\'odigo en C++ que puede encontrarse en \cite{analyzer}. Este c\'odigo usa los m\'odulos de CMSSW para realizar la selecci\'on apropiada de muones y segmentos que se describir\'a en la subsecci\'on~\ref{sec:selection}. 
+\item CMSSW~\cite{cmssw} es una colecci\'on de software abierto utilizado principalmente para la simulaci\'on, calibraci\'on, alineamiento, y reconstrucci\'on de objetos f\'isicos para el posterior an\'alisis de los datos. \\
+Para este trabajo se ha creado un c\'odigo en C++ que puede encontrarse en \cite{analyzer}. Este c\'odigo usa los m\'odulos de CMSSW para realizar la selecci\'on apropiada de muones y segmentos que se describir\'a en la subsecci\'on~\ref{sec:selection}. 
 
 \item ROOT~\cite{root} es el marco de trabajo m\'as utilizado f\'isica de altas energ\'ias para el procesado de datos, para an\'alisis estad\'istico, y proporciona adem\'as herramientas de visualizaci\'on y almacenamiento de los mismos. ROOT est\'a basado en programaci\'on orientada a objetos y escrito en C++, y se usar\'a como formato de los datos de entrada y salida del c\'odigo de selecci\'on~\cite{analyzer}.
 
-\item Pandas~\cite{mckinney-proc-scipy-2010} (del ingl\'es \textit{Python Data Analysis Library}), es una librer\'ia de Python que ofrece gran rendimiento en el manejo de estructuras tabulares de datos. En este caso, se usar\'a Pandas, previa transformaci\'on de los datos en formato ROOT a formato de texto, para el procesado de los segmentos seleccionados (operaciones de limpiado de segmentos, agregaciones, construcci\'on de las variables de entrenamiento...etc). \\
-Los m\'odulos creados para el procesado pueden encontrarse en \cite{processor}.
+\item Pandas~\cite{mckinney-proc-scipy-2010} (del ingl\'es \textit{Python Data Analysis Library}), es una librer\'ia de Python que ofrece gran rendimiento en el manejo de estructuras tabulares de datos. \\
+En este caso, se usar\'a Pandas, previa transformaci\'on de los datos en formato ROOT a formato de texto, para el procesado de los segmentos seleccionados (operaciones de limpiado de segmentos, agregaciones, construcci\'on de las variables de entrenamiento...etc). Los m\'odulos creados para el procesado pueden encontrarse en \cite{processor}.
 
 \end{itemize}
 
@@ -54,12 +56,12 @@ Con esta muestra de simulaci\'on se tiene una estad\'istica razonable de muones 
 
 \subsection{Selecci\'on de muones y segmentos}\label{sec:selection}
 
-El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer}) de la muestra de Monte-Carlo para el posterior an\'alisis consta de las siguientes fases: 
+El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer}) de la muestra de simulaci\'on Monte-Carlo para el posterior an\'alisis consta de las siguientes fases: 
 
 \begin{enumerate}
 \item Lectura de datos: en los datos de entrada, los muones y segmentos reconstruidos por evento se almacenan en colecciones de ROOT, que funcionan a modo de contenedor de informaci\'on. Por tanto, el primer paso es leer las colecciones para poder iterar sobre ellas. 
-\item Se recorre la colecci\'on de muones y se seleccionan aquellos que cumplen con los requisitos recogidos en la Tabla~\ref{tab:muon_sel}. Se pide que los muones tengan traza reconstruida en el tracker con $p_{T} >$ 200 GeV, y que esta traza reconstruida est\'e pr\'oxima a la traza generada del mu\'on dentro de un cono $\Delta$R = $\sqrt{(\Delta\eta^{2}+\Delta\phi^{2})} <$  0.3.
-\item Posteriormente, se recorren las colecciones de segmentos encontradas en el evento, y se almacenan sus coordenadas y los identificadores de los detectores en los que se encuentran si cumplen los requisitos registrados en la Tabla~\ref{tab:segment_sel}. Esencialmente, se pide que los segmentos sean v\'alidos\footnote{Que son compatibles con la trayectoria inicial, con un $\chi$\textsuperscript{2} no muy elevado, y adem\'as el detector est\'a funcionando correctamente en el momento de la medida}, y se hayan medido correctamente sus coordenadas.
+\item Se recorre la colecci\'on de muones y se seleccionan aquellos que cumplen con los requisitos recogidos en la Tabla~\ref{tab:muon_sel}. Esencialmente se pide que los muones tengan traza reconstruida en el tracker con $p_{T} >$ 200 GeV, y que esta traza reconstruida est\'e pr\'oxima a la traza generada del mu\'on dentro de un cono $\Delta$R = $\sqrt{(\Delta\eta^{2}+\Delta\phi^{2})} <$  0.3.
+\item Posteriormente, se recorren las colecciones de segmentos encontradas en el evento, y se almacenan sus coordenadas y los identificadores de los detectores en los que se encuentran si cumplen los requisitos registrados en la Tabla~\ref{tab:segment_sel}. B\'asicamente, se pide que los segmentos sean v\'alidos\footnote{Que son compatibles con la trayectoria inicial, con un $\chi$\textsuperscript{2} no muy elevado, y adem\'as el detector est\'a funcionando correctamente en el momento de la medida}, y se hayan medido correctamente sus coordenadas en el detector.
 \item Se selecciona el estado m\'as externo de la traza del tracker y se extrapola (siguiendo la trayectoria de la traza y teniendo en cuenta el momento magn\'etico del solenoide de CMS) a la superficie de cada uno de los detectores registrados donde se ha encontrado al menos un segmento.
 \item Se seleccionan aquellas extrapolaciones que cumplen los cortes de la Tabla~\ref{tab:prop_sel}. En este caso, se pide que las extrapolaciones sean v\'alidas, vayan en la direcci\'on del momento, y que la distancia entre el centro de la c\'amara y la extrapolaci\'on no exceda el tama\~no propio de la c\'amara. Este \'ultimo requerimento es de vital importancia, ya que las superficies a las que se extrapola son planos de dimensi\'on infinita, y una part\'icula cargada en movimiento sometida a un campo magn\'etico siempre puede cortar un plano de dimensi\'on infinita al curvarse.
 \item Se guardan todas las variables de inter\'es como objetos de ROOT, es decir, la informaci\'on sobre la traza del mu\'on en el tracker, las coordenadas de los segmentos recogidos, y las coordenadas de las extrapolaciones.
@@ -165,23 +167,55 @@ Para la construcci\'on de las variables que ser\'an utilizadas en el entrenamien
 
 Se han realizado varias comprobaciones para asegurarnos de que los datos que se utilizar\'an en el entrenamiento tienen sentido. \\
 
-En la primera de ellas, se seleccionan muones con cuatro o m\'as segmentos en las DTs y adem\'as se require que tengan al menos un segmento en cada estaci\'on. Posteriormente, se separan los muones que cumplan estas condiciones en dos categor\'ias: aquellos que tienen exactamente cuatro segmentos (uno en cada estaci\'on), y aquellos que tienen m\'as de cuatro segmentos, donde los segmentos adicionales pueden provenir de cascadas electromagn\'eticas. De esta manera, si para cada mu\'on se selecciona el m\'aximo valor de distancia entre el segmento y la propagaci\'on, uno esperar\'ia que la distribuci\'on de valores m\'aximos de distancias pique a valores m\'as bajos en la categor\'ia de cuatro segmentos que en la categor\'ia de m\'as de cuatro segmentos, y que se tenga una cola m\'as alargada en la segunda categor\'ia. \\
+En primer lugar, se seleccionan muones con cuatro o m\'as segmentos en las DTs y adem\'as se pide que tengan al menos un segmento en cada estaci\'on. Posteriormente, se separan los muones que cumplan estas condiciones en dos categor\'ias: aquellos que tienen exactamente cuatro segmentos (uno en cada estaci\'on), y aquellos que tienen m\'as de cuatro segmentos, donde los segmentos adicionales pueden provenir de cascadas electromagn\'eticas. \\
+De esta manera, si para cada mu\'on se selecciona el m\'aximo valor de distancia entre el segmento y la propagaci\'on, uno esperar\'ia que la distribuci\'on de valores m\'aximos de distancias pique a valores m\'as bajos en la categor\'ia de cuatro segmentos que en la categor\'ia de m\'as de cuatro segmentos, y que se tenga una cola m\'as alargada en la segunda categor\'ia. \\
 Las distribuciones para ambos grupos se muestran en la Figura~\ref{fig:data_dist}. \\
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=1.0\textwidth]{figures/data_simple_dist_postCleaning.png}
+\includegraphics[width=1.1\textwidth]{figures/data_simple_dist_postCleaning.png}
 \caption{Distribuciones del m\'aximo valor encontrado de distancia entre el segmento y la extrapolaci\'on (por mu\'on). Izquierda: Muones con cuatro segmentos en las DTs, uno en cada estaci\'on. Derecha: Muones con m\'as de cuatro segmentos en las DTs, y con al menos un segmento por estaci\'on.}
 \label{fig:data_dist}        
 \end{figure}
 
 
-Por otra parte, en la Figura~\ref{fig:data_nSegmentsMean} se muestra la distribuci\'on de la media del n\'umero de segmentos recogidos por mu\'on en funci\'on del $p_{T}$ de generaci\'on. Se observa en este caso que hay una clara tendencia ascendente del promedio del n\'umero de segmentos con el $p_{T}$, ya que como se indic\'o en la secci\'on~\ref{sec:intro}, a mayor $p_{T}$ mayor es la probabilidad de que el mu\'on emita una cascada y se encuentren por tanto m\'as se\~nales en las c\'amaras de muones.
+Por otra parte, en la Figura~\ref{fig:data_nSegmentsMean} se muestra la distribuci\'on de la media del n\'umero de segmentos recogidos por mu\'on en funci\'on del $p_{T}$ de generaci\'on. Se observa en este caso que hay una clara tendencia ascendente del promedio del n\'umero de segmentos con el $p_{T}$, ya que como se indic\'o en la secci\'on~\ref{sec:intro}, a mayor $p_{T}$ mayor es la probabilidad de que el mu\'on emita una cascada y se encuentren por tanto m\'as se\~nales en las c\'amaras de muones. \\
 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
-\includegraphics[width=0.5\textwidth]{figures/data_simple_genpt_MeanNSegments.png}
+\includegraphics[width=0.65\textwidth]{figures/data_genpt_MeanNSegments.png}
 \caption{Distribuci\'on del promedio de segmentos encontrados por mu\'on en funci\'on del momento transverso generado.}
 \label{fig:data_nSegmentsMean}        
 \end{figure}
+
+Equivalentemente, en la Figura~\ref{fig:data_R_genpt} se muestra la distribuci\'on de la resoluci\'on $R$ por mu\'on en funci\'on del $p_{T}$ de generaci\'on, mientras que en la Figura~\ref{fig:data_recopt_genpt} se representa el momento transverso de generaci\'on en funci\'on del momento transverso dado por el algoritmo TuneP para cada mu\'on de la muestra. \\
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/data_genpt_R.png}
+\caption{Distribuci\'on de la resoluci\'on R por mu\'on en funci\'on del momento transverso generado.}
+\label{fig:data_R_genpt}        
+\end{figure}
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1.0\textwidth]{figures/data_tunePpt_genpt.png}
+\caption{Distribuci\'on bidimensional del $p_{T}$ de generaci\'on en funci\'on del $p_{T}$ proporcionado por el algoritmo TuneP para los muones de la muestra.}
+\label{fig:data_recopt_genpt}  
+\end{figure}
+
+Por \'ultimo, teniendo en cuenta que la part\'icula $Z'$ de la que provienen los muones es muy masiva (m$Z'$ = 5 TeV) y que esta se produce normalmente en reposo, cabr\'ia esperar que los muones fruto de su desintegraci\'on viajen en direcciones opuestas. En la Figura~\ref{fig:data_deltaR} se muestra la distancia angular $\Delta$R entre los dos muones de cada evento generado. \\
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/data_deltaR.png}
+\caption{Distribuci\'on de la variable $\Delta$R = $\sqrt{(\Delta\eta^{2}+\Delta\phi^{2})}$ entre los dos muones de cada evento simulado.}
+\label{fig:data_deltaR}  
+\end{figure}
+
+\clearpage
+
+
+ 
