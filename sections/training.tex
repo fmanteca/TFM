@@ -1,5 +1,5 @@
 
-Una vez obtenida toda la informaci\'on posible del mu\'on a su paso por CMS, el objetivo es entrenar una red neuronal profunda tomando como entrada la informaci\'on de la traza en el tracker y la informaci\'on espacial de las se\~nales recogidas en el sistema de muones. \\
+Una vez obtenida toda la informaci\'on posible del mu\'on a su paso por CMS, el objetivo es entrenar una red neuronal profunda tomando como entrada las propiedades de la traza en el tracker y la informaci\'on espacial de las se\~nales recogidas en el sistema de muones. \\
 En este caso, la funci\'on de p\'erdida a minimizar ser\'a una funci\'on que dependa de la diferencia entre el $p_{T}$ de generaci\'on conocido y el $p_{T}$ que se quiere predecir, para as\'i aprender las caracter\'isticas de los muones (especialmente de aquellos que emitan cascadas) y hacer regresi\'on al momento transverso reconstruido. \\
 
 En cuanto al software, para el entrenamiento se utiliza la librer\'ia de Python de c\'odigo abierto Keras~\cite{chollet2015keras}, que se caracteriza principalmente por ofrecer sencillez de uso para el usuario, y la red se ejecuta sobre TensorFlow~\cite{tensorflow2015-whitepaper}.
@@ -35,15 +35,23 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{full
 
 \item Activaci\'on: Para las capas 1-9 se utiliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo por tener siempre derivada igual a la unidad y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 10 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al $p_{T}$.
 
-\item Como optimizador se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el Gradient Descent con momento con el Gradient descent con RMSprop, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
+\item Como optimizador se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el Gradient Descent con momento con el Gradient Descent con RMSprop, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
 
-\item Funci\'on de p\'erdida: MSE (del ingl\'es \textit{Mean Squared Error}).
+\item Funci\'on de p\'erdida: MSE (del ingl\'es \textit{Mean Squared Error}), que se define como el promedio de los errores al cuadrado de la siguiente manera:
+
+\begin{equation}
+  MSE = \frac{1}{n}\Sigma_{i=1}^{n}{\left({p_{T}^{GEN}}_i^2 - {p_{T}^{PRED}}_i^2\right)}
+\label{eq:MSE}
+\end{equation}
+
+Donde $n$ se corresponde con el n\'umero de muones de la muestra, ${p_{T}^{GEN}}_i$ hace referencia al momento transverso generado y conocido del mu\'on $i$ (magnitud que se quiere predecir), y ${p_{T}^{PRED}}_i$ al momento transverso que se predice la red para el mismo. 
 
 \item \'Epocas de entrenamiento: 1000.
 
 \item Descenso del gradiente: para agilizar el apredizaje se hace uso de la t\'ecnica del \textit{mini-batch gradient descent}~\cite{perrone2019optimal}, que consiste en dividir el conjunto de datos de entrenamiento en fragmentos peque\~nos denominados \textit{mini-batches}, de manera que los par\'ametros de la red se van actualizando para cada fragmento sin tener que recorrer toda la muestra, mejorando considerablemente la velocidad en el entrenamiento y consiguiendo una buena convergencia. El tama\~no del mini-batch elegido ha sido de 2000 muones.
 
-\item Para regularizar se utiliza la t\'ecnica de \textit{Early stopping} en la p\'erdida del conjunto de datos de validaci\'on, con una paciencia de 50 \'epocas. De esta manera, para cada \'epoca se obtiene el valor del MSE en el conjunto de datos de validaci\'on (que no se utilizan para entrenar). Si el MSE no mejora despu\'es de 50 \'epocas se guarda el modelo encontrado con menor MSE en validaci\'on y se detiene el entrenamiento para evitar as\'i que el modelo sobreentrene. 
+\item Para regularizar se utiliza la t\'ecnica de \textit{Early stopping} en la p\'erdida del conjunto de datos de validaci\'on, con una paciencia de 50 \'epocas. \\
+De esta manera, para cada \'epoca se obtiene el valor del MSE en el conjunto de datos de validaci\'on (que no se utilizan para entrenar), y si el MSE no mejora despu\'es de 50 \'epocas se guarda el modelo encontrado con menor MSE en validaci\'on y se detiene abruptamente el entrenamiento para evitar as\'i que el modelo sobreentrene. 
 
 \end{itemize}
 
@@ -53,6 +61,7 @@ El valor de los hiperpar\'ametros se ha tomado tras probar distintas configuraci
 \subsection{Resultados del entrenamiento}\label{sec:trainresults}
 
 En la Figura~\ref{fig:model_loss} se muestra la el valor de la p\'erdida MSE en funci\'on de la \'epoca de entrenamiento. \\
+
 El mejor modelo de obtiene despu\'es de 184 \'epocas, con un valor de p\'erdida para el conjunto de datos de entrenamiento de 49605.3, para el conjunto de datos de validaci\'on de 50399.8, y para el conjunto de datos de testeo de 53731.6.  \\
 
 \begin{figure}[h]
