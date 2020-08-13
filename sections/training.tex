@@ -33,9 +33,7 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{full
 
 \begin{itemize}
 
-\item Activaci\'on: Para las capas 1-9 se utiliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo por tener siempre derivada igual a la unidad y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 10 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al $p_{T}$.
-
-\item Como optimizador se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el Gradient Descent con momento con el Gradient Descent con RMSprop, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
+\item Activaci\'on: Para las capas 1-9 se utiliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo por tener siempre derivada igual a la unidad y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 10 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al momento transverso.
 
 \item Funci\'on de p\'erdida: MSE (del ingl\'es \textit{Mean Squared Error}), que se define como el promedio de los errores al cuadrado de la siguiente manera:
 
@@ -46,9 +44,11 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{full
 
 Donde $n$ se corresponde con el n\'umero de muones de la muestra, ${p_{T}^{GEN}}_i$ hace referencia al momento transverso generado y conocido del mu\'on $i$ (magnitud que se quiere predecir), y ${p_{T}^{PRED}}_i$ al momento transverso que se predice la red para el mismo. 
 
-\item \'Epocas de entrenamiento: 1000.
-
 \item Descenso del gradiente: para agilizar el apredizaje se hace uso de la t\'ecnica del \textit{mini-batch gradient descent}~\cite{perrone2019optimal}, que consiste en dividir el conjunto de datos de entrenamiento en fragmentos peque\~nos denominados \textit{mini-batches}, de manera que los par\'ametros de la red se van actualizando para cada fragmento sin tener que recorrer toda la muestra, mejorando considerablemente la velocidad en el entrenamiento y consiguiendo una buena convergencia. El tama\~no del mini-batch elegido ha sido de 2000 muones.
+
+\item Como optimizador se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el descenso del gradiente con momento y el descenso del gradiente con RMSprop~\cite{tieleman2012lecture}, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
+
+\item \'Epocas de entrenamiento: 1000.
 
 \item Para regularizar se utiliza la t\'ecnica de \textit{Early stopping} en la p\'erdida del conjunto de datos de validaci\'on, con una paciencia de 50 \'epocas. \\
 De esta manera, para cada \'epoca se obtiene el valor del MSE en el conjunto de datos de validaci\'on (que no se utilizan para entrenar), y si el MSE no mejora despu\'es de 50 \'epocas se guarda el modelo encontrado con menor MSE en validaci\'on y se detiene abruptamente el entrenamiento para evitar as\'i que el modelo sobreentrene. 
@@ -56,7 +56,7 @@ De esta manera, para cada \'epoca se obtiene el valor del MSE en el conjunto de 
 \end{itemize}
 
 El valor de los hiperpar\'ametros se ha tomado tras probar distintas configuraciones aleatorias de los mismos (b\'usqueda de tipo cuadr\'icula), y se ha elegido aquella que proporciona un MSE menor en el conjunto de datos de testeo.
-  
+
 
 \subsection{Resultados del entrenamiento}\label{sec:trainresults}
 
