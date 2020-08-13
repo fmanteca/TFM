@@ -46,7 +46,7 @@ Donde $n$ se corresponde con el n\'umero de muones de la muestra, ${p_{T}^{GEN}}
 
 \item Descenso del gradiente: para agilizar el apredizaje se hace uso de la t\'ecnica del \textit{mini-batch gradient descent}~\cite{perrone2019optimal}, que consiste en dividir el conjunto de datos de entrenamiento en fragmentos peque\~nos denominados \textit{mini-batches}, de manera que los par\'ametros de la red se van actualizando para cada fragmento sin tener que recorrer toda la muestra, mejorando considerablemente la velocidad en el entrenamiento y consiguiendo una buena convergencia. El tama\~no del mini-batch elegido ha sido de 2000 muones.
 
-\item Como optimizador se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el descenso del gradiente con momento y el descenso del gradiente con RMSprop~\cite{tieleman2012lecture}, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
+\item Como optimizador se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el descenso del gradiente con momento~\cite{PMID:12662723} y el descenso del gradiente con RMSprop~\cite{tieleman2012lecture}, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
 
 \item \'Epocas de entrenamiento: 1000.
 
