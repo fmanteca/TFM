@@ -68,15 +68,15 @@ El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer
       \begin{tabular} {lc}
         \hline
         \hline
-        Variable & Selecci\'on \\
+        Objeto                            & M\'etodo y selecci\'on                \\
         \hline
-        TrackerTrack                          & Non-Null      \\
-        TrackerTrack $p_{T}$ [GeV]            & $>$ 200       \\
-        $\Delta$R(genMuon, recoMuon)          & $<$ 0.3       \\
+        TrazaTracker                      & isNonnull() == 1                       \\
+        TrazaTracker                      & pt() $>$ 200                           \\
+        Mu\'onReco                        & $\Delta$(Mu\'onGen) $<$ 0.3            \\
         \hline
       \end{tabular}
     }
-    \caption{Selecci\'on aplicada sobre la colecci\'on de muones, donde la distancia angular $\Delta$R = $\sqrt{(\Delta\eta^{2}+\Delta\phi^{2})}$ se calcula entre la colecci\'on de muones reoonstruidos y la colecci\'on de part\'iculas generadas.}
+    \caption{Selecci\'on aplicada sobre la colecci\'on de muones usando los m\'etodos de CMSSW, donde la distancia angular $\Delta$R = $\sqrt{(\Delta\eta^{2}+\Delta\phi^{2})}$ se calcula entre la colecci\'on de muones reoonstruidos y la colecci\'on de muones generados.}
     \label{tab:muon_sel}
   \end{center}
 \end{table}
@@ -89,20 +89,19 @@ El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer
       \begin{tabular} {lc}
         \hline
         \hline
-        Objeto & Selecci\'on \\
+        Objeto & M\'etodo y Selecci\'on                    \\
         \hline
-        SegmentoDT            & isValid()==1      \\
-        SegmentoDT            & hasPhi()==1       \\
-        SegmentoDT            & (hasZ()==1 or station==4)   \\
-        SegmentoCSC           & isValid()==1      \\
+        SegmentoDT            & isValid()==1               \\
+        SegmentoDT            & hasPhi()==1                \\
+        SegmentoDT            & (hasZ()==1 or station==4)  \\
+        SegmentoCSC           & isValid()==1               \\
         \hline
       \end{tabular}
     }
-    \caption{Selecci\'on aplicada sobre la colecci\'on de segmentos.}
+    \caption{Selecci\'on aplicada sobre la colecci\'on de segmentos usando los m\'etodos de CMSSW.}
     \label{tab:segment_sel}
   \end{center}
 \end{table}
-
 
 
 \item Se selecciona el estado m\'as externo de la traza del tracker y se extrapola (siguiendo la trayectoria de la traza y teniendo en cuenta el campo magn\'etico del solenoide de CMS) a la superficie de cada uno de los detectores registrados donde se ha encontrado al menos un segmento.
@@ -114,15 +113,15 @@ El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer
       \begin{tabular} {lc}
         \hline
         \hline
-        Objeto & Selecci\'on \\
+        Objeto                                    & Selecci\'on                                             \\
         \hline
-        Propagaci\'on          & isValid()==1                                                                 \\
-        Propagaci\'on          & Hacia adelante                                                                \\
-        Propagaci\'on          & dist(extrapolaci\'on, centro de c\'amara) $\leq$ tama\~no de c\'amara      \\
+        Propagaci\'on                             & isValid()==1                                            \\
+        Propagaci\'on                             & Hacia adelante                                          \\
+        Propagaci\'on                             & dist(centro c\'amara) $\leq$ tama\~no de c\'amara       \\
         \hline
       \end{tabular}
     }
-    \caption{Selecci\'on aplicada sobre las propagaciones. ``dist'' hace referencia a la distancia eucl\'idea.}
+    \caption{Selecci\'on aplicada sobre las propagaciones usando los m\'etodos de CMSSW. ``dist'' hace referencia a la distancia eucl\'idea.}
     \label{tab:prop_sel}
   \end{center}
 \end{table}
