@@ -1,9 +1,9 @@
 
 El momento de un mu\'on \textit{low-$p_{T}$} es extraido a partir de la reconstrucci\'on de su trayectoria a trav\'es de las se\~nales que deja en el tracker junto con los impactos en el sistema de muones mediante un ajuste por filtro de Kalman~\cite{Kalman1960ANA}. \\
 
-En el caso de muones \textit{high-$p_{T}$}, part\'iculas adicionales generadas en las cascadas electromagn\'eticas dejan t\'ipicamente impactos y segmentos adicionales en las distintas c\'amaras, provocando que estas se\~nales adicionales sean probablemente utilizadas en el ajuste por filtro de Kalman en lugar de las se\~nales que realmente provienen del mu\'on que se quiere medir, o directamente un n\'umero elevado de impactos en una c\'amara puede dificultar seriamente la propia reconstrucci\'on. Es por esto que los muones de alto momento requieren un tratamiento m\'as cuidadoso de la informaci\'on encontrada en el sistema de muones, lo que se conoce como reajustes, que seleccionan qu\'e impactos van a utilizarse en el proceso de reconstrucci\'on de la traza y cu\'ales no. \\
+En el caso de muones \textit{high-$p_{T}$}, part\'iculas adicionales generadas en las cascadas electromagn\'eticas dejan t\'ipicamente impactos y segmentos adicionales en las distintas c\'amaras, provocando que estas se\~nales adicionales sean probablemente utilizadas en el ajuste por filtro de Kalman en lugar de las se\~nales que realmente provienen del mu\'on que se quiere medir, o equivalentemente, un n\'umero elevado de impactos en una c\'amara en particular puede dificultar seriamente la propia reconstrucci\'on. Es por esto que los muones de alto momento requieren un tratamiento m\'as cuidadoso de la informaci\'on encontrada en el sistema de muones, lo que se conoce como reajustes, que seleccionan qu\'e impactos van a utilizarse en el proceso de reconstrucci\'on de la traza y cu\'ales no. \\
 
-En las siguientes subsecciones se da una descripci\'on general de los distintos reajustes para muones \textit{high-$p_{T}$} que actualmente se llevan a cabo en CMS, as\'i como del algoritmo utilizado para la asignaci\'on final de momento transverso.
+En las siguientes subsecciones se da una descripci\'on general de los distintos reajustes para muones \textit{high-$p_{T}$} que actualmente se llevan a cabo en CMS, as\'i como del algoritmo utilizado para la asignaci\'on final del momento transverso.
 
 \subsection{Reajuste TPFMS (\textit{Tracker-plus-first-muon-station})}\label{sec:TPFMS}
 
@@ -11,7 +11,8 @@ El primer reajuste, que es el m\'as sencillo en cuanto a su implementaci\'on, es
 
 \subsection{Reajuste Picky}\label{sec:Picky}
 
-El reajuste Picky tiene como objetivo encontrar posibles cascadas y eliminar los impactos de las mismas del ajuste global. De esta manera, si m\'as de $n$ impactos se encuentran dentro de un cono entorno a un impacto concreto, la estaci\'on en la que se encuentran dichas se\~nales se marca como contaminada. As\'i, a la hora de hacer el ajuste a la traza, si su $\chi$\textsuperscript{2} est\'a por encima de un cierto umbral, se eliminan del ajuste aquellos impactos que se encuentren en c\'amaras contaminadas y se repite el ajuste de nuevo. En este caso, los par\'ametros del algoritmo $n$ y $\chi$ est\'an optimizados en base a estudios sobre simulaciones.
+El reajuste Picky tiene como objetivo encontrar posibles cascadas y eliminar sus se\~nales adicionales del ajuste de la traza. De esta manera, si m\'as de $n$ impactos se encuentran dentro de un cono en torno a un impacto concreto, la estaci\'on en la que se encuentran dichas se\~nales se marca como contaminada. As\'i, a la hora de hacer el ajuste a la traza, si su $\chi$\textsuperscript{2} est\'a por encima de un cierto umbral, se eliminan del mismo aquellos impactos que se encuentren en c\'amaras contaminadas y se repite el ajuste de nuevo. \\
+Los par\'ametros del algoritmo $n$ y $\chi$ est\'an optimizados en base a estudios sobre simulaciones.
 
 \subsection{Reajuste DYT (\textit{Dynamic truncation})}\label{sec:DYT}
 
