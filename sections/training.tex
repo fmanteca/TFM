@@ -72,7 +72,7 @@ El mejor modelo de obtiene despu\'es de 184 \'epocas, con un valor de p\'erdida 
 \end{figure}
 
 
-En la Figura~\ref{fig:R_predicted} se comparan la distribuciones de la resoluci\'on R, definida en \eqref{eq:R}, calculadas sobre el conjunto de datos de testeo a partir del $p_{T}$ que da el algoritmo TuneP y a partir del $p_{T}$ que predice la red neuronal respectivamente.
+En la Figura~\ref{fig:R_predicted} se comparan la distribuciones de la resoluci\'on R, definida en \eqref{eq:R}, calculadas sobre el conjunto de datos de testeo a partir del $p_{T}$ que da el algoritmo TuneP y a partir del $p_{T}$ que predice la red neuronal respectivamente. \\
 
 \begin{figure}[h]
 \centering
@@ -80,5 +80,15 @@ En la Figura~\ref{fig:R_predicted} se comparan la distribuciones de la resoluci\
 \caption{Distribuci\'on de la resoluci\'on R dada por \eqref{eq:R} sobre el conjunto de datos de testeo. Izquierda: tomando el $p_{T}$ que da el algoritmo TuneP. Derecha: tomando el $p_{T}$ predicho por el modelo de regresi\'on al $p_{T}$.}
 \label{fig:R_predicted}        
 \end{figure}
+
+Por \'ultimo, en la Figura~\ref{fig:ptpred_tuneppt} se muestra la distribuci\'on bidimensional del momento transverso de predicho por la red en funci\'on del momento transverso de generaci\'on para los muones del conjunto de datos de testeo. \\
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{figures/data_test_ptpred_genpt.png}
+\caption{Distribuci\'on bidimensional del $p_{T}$ predicho por la red neuronal en funci\'on del $p_{T}$ de generaci\'on para los muones del conjunto de datos de testeo.}
+\label{fig:ptpred_tuneppt}  
+\end{figure}
+
 
 \clearpage
