@@ -1,6 +1,5 @@
-
-Dado que el objetivo del trabajo es mejorar la asignaci\'on de momento para muones \textit{high-$p_{T}$}, especialmente para los casos con alta probabilidad de emisi\'on de cascadas electromagn\'eticas, el primer aspecto que se ha de tener en cuenta es recopilar toda la informaci\'on posible del mu\'on (incluyendo los impactos que provienen de las propias cascadas), en contraposici\'on a la estrategia de los distintos reajustes descritos en la Secci\'on~\ref{sec:current_assignment}, que tratan de encontrar aquellas c\'amaras donde es probable que haya tenido lugar una cascada para despu\'es eliminar la informaci\'on de dichas c\'amaras al de hacer la reconstrucci\'on de la traza del mu\'on. \\
-De esta manera, el procedimiento que se va a seguir para recoger toda la informaci\'on posible es extrapolar la traza del mu\'on medida en el tracker interno a las c\'amaras de muones, para despu\'es almacenar todo el conjunto de segmentos que se encuentren en torno al punto extrapolaci\'on, siendo capaces as\' de guardar todas las se\~nales que genere la posible cascada. \\
+Este trabajo persigue implementar un algoritmo regresivo usando una DNN para predecir el momento transverso de muones de alto momento, intentando mejorar los algoritmos actuales de CMS. \\
+Puesto que parte de los problemas de reconstrucci\'on de este tipo de muones tiene que ver con la alta probabilidad de emisi\'on de cascadas electromag\'eticas y por consiguiente la alta multiplicidad de segmentos en el sistema de muones, la propuesta tiene como elemento clave la distribuci\'on de segmentos en las c\'amaras de muones. En particular, cada elemento del conjunto de datos estar\'a compuesto por la informaci\'on de la traza del mu\'on reconstruida \'unicamente en el tracker, as\'i como sus extrapolaciones al sistema de muones, junto con informaci\'on acerca del n\'umero y distribuci\'on de los segmentos en torno a dichas extrapolaciones. \\
 
 En la presente secci\'on se detallar\'an las herramientas y metodolog\'ia utilizadas para el tratamiento de los datos.
 
@@ -41,6 +40,8 @@ El proceso l\'ogico de trabajo en cuanto a las herramientas utilizadas y al form
 
 \subsection{Muestra de simulaci\'on utilizada}\label{sec:sample}
 
+Varias teor\'ias que extienden el Modelo Est\'andard de la f\'isica de part\'iculas proponen la existencia de bosones masivos no observados entre los cuales destaca el llamado $Z'$, que se postula an\'alogo al bos\'on $Z$ en cuanto a sus propiedades f\'isicas, pero con una masa mayor. \\
+
 Se han generado un total de 100000 eventos de $Z'$ con $m_{Z'}$ = 5000 GeV fruto de la colisiones prot\'on-prot\'on a una energ\'ia de centro de masas de 13 TeV\footnote{condiciones actuales de funcionamiento del acelerador LHC} mediante simulaci\'on de Monte-Carlo utilizando el programa MadGraph5 (ver \cite{generator}). \\
 Se impone que las part\'iculas $Z'$ generadas se desintegren a un par de muones de carga opuesta $\mu^{+}\mu^{-}$, y se simula el paso de dichos muones por el detector CMS con el paquete Geant4~\cite{Agostinelli:2002hh}. \\
 
@@ -54,7 +55,7 @@ Con esta muestra de simulaci\'on se tiene una estad\'istica razonable de muones 
 \end{figure}
 
 
-\subsection{Selecci\'on de muones y segmentos}\label{sec:selection}
+\subsection{Preparaci\'on del conjunto de datos: selecci\'on de muones y segmentos}\label{sec:selection}
 
 El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer}) de la muestra de simulaci\'on Monte-Carlo para el posterior an\'alisis consta de las siguientes partes: 
 
@@ -104,7 +105,7 @@ El proceso de selecci\'on de los muones y segmentos (ver c\'odigo \cite{analyzer
 \end{table}
 
 
-\item Se selecciona el estado m\'as externo de la traza del tracker y se extrapola (siguiendo la trayectoria de la traza y teniendo en cuenta el campo magn\'etico del solenoide de CMS) a la superficie de cada uno de los detectores registrados donde se ha encontrado al menos un segmento.
+\item Se selecciona el estado m\'as externo de la traza del tracker y se extrapola a la superficie de cada uno de los detectores registrados donde se ha encontrado al menos un segmento. El proceso de extrapolaci\'on se lleva a cabo utilizando un software especializado que integra la trayectoria de los muones aplicando la ley de Lorentz y teniendo en cuenta sus interacciones con el material de los detectores, como la ionizaci\'on o el scattering m\'ultiple Coulombiano.
 \item Se seleccionan aquellas extrapolaciones que cumplen los cortes de la Tabla~\ref{tab:prop_sel}. En este caso, se pide que las extrapolaciones sean v\'alidas (compatibles con la direcci\'on de la trayectoria inicial), vayan en la direcci\'on del campo magn\'etico impuesto por el solenoide de CMS, y que la distancia entre el centro de la c\'amara y la extrapolaci\'on no exceda el tama\~no propio de la c\'amara. \\
 Este \'ultimo requerimento es de vital importancia, ya que las superficies a las que se extrapola son planos de dimensi\'on infinita (sin delimitar por las dimensiones reales de las c\'amaras), y una part\'icula cargada en movimiento sometida a un campo magn\'etico siempre puede cortar un plano de dimensi\'on infinita al curvarse.
 

@@ -33,7 +33,9 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{full
 
 \begin{itemize}
 
-\item Activaci\'on: Para las capas 1-9 se utiliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo por tener siempre derivada igual a la unidad y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 10 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al momento transverso.
+\item Capa de entrada con 108 neuronas (variables de entrenamiento), un total de 9 capas ocultas con 512, 512, 256, 256, 128, 128, 64, 64 y 16 neuronas respectivamente, y una neurona en la capa de salida.
+
+\item Activaci\'on: Para las capas 1-10 se utiliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo por tener siempre derivada igual a la unidad y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 11 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al momento transverso.
 
 \item Funci\'on de p\'erdida: MSE (del ingl\'es \textit{Mean Squared Error}), que se define como el promedio de los errores al cuadrado de la siguiente manera:
 
