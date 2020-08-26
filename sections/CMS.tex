@@ -23,11 +23,21 @@ En las siguientes subsecciones se describir\'a brevemente el funcionamiento y ca
 
 \subsection{Tracker}\label{sec:tracker}
 
-TEST
+El tracker~\cite{trackerperformance} se situa en la parte m\'as interna de CMS y se est\'a formado por p\'ixeles, que se sit\'uan en el n\'ucleo del subdetector y reciben por tanto la mayor intensidad de part\'culas, y por tiras de silicio que rodean las capas de p\'ixeles (ver Figura~\ref{fig:tracker}). \\ 
+
+A medida que las part\'iculas viajan a trav\'es del tracker, los p\'ixeles y las tiras producen peque\~nas se\~nales el\'ectricas que se amplifican y detectan. De esta manera, el tracker cuenta con un total de 75 millones de canales electr\'onicos, dando lugar a unas 6000 conexiones por cent\'imetro cuadrado, consiguiendo medir las trayectorias de las part\'iculas cargadas con una precisi\'on de unos 10 $\mu$m.  \\
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/Phase1_Tracker_1Quarter.png}
+\caption{Cuadrante del tracker de CMS en el plano r-z. El detector de p\'ixeles se muestra en verde, mientras que los m\'odulos de tiras de una cara y de dos caras se muestran como segmentos rojos y azules respectivamente. Imagen tomada de \cite{trackerplot}.}
+\label{fig:tracker}
+\end{figure}
+
 
 \subsection{Tubos de deriva: DTs}\label{sec:DTs}
 
-Los tubos de deriva~\cite{DTperformance} cubren el barril de CMS ($\lvert \eta \rvert <$ 0.9). Cada tubo se compone de un hilo colector de carga cargado positivamente y est\'a lleno de gas, de forma que una part\'icula cargada a su paso por el tubo arranca electrones de los \'atomos del gas, que son atraidos el\'ectricamente y recolectados por el hilo conductor. De esta manera, se obtienen las coordenadas del paso del mu\'on por el tubo a partir de la posici\'on del hilo donde los electrones impactan y de la distancia del mu\'on al hilo, que se calcula multiplicando la velocidad de deriva del electr\'on en el tubo por el tiempo de viaje hasta el hilo. \\
+Los tubos de deriva~\cite{DTperformance} cubren el barril de CMS ($\lvert \eta \rvert <$ 0.9) en la parte m\'as externa del detector. Cada tubo se compone de un hilo colector de carga cargado positivamente y est\'a lleno de gas, de forma que una part\'icula cargada a su paso por el tubo arranca electrones de los \'atomos del gas, que son atraidos el\'ectricamente y recolectados por el hilo conductor. De esta manera, se obtienen las coordenadas del paso del mu\'on por el tubo a partir de la posici\'on del hilo donde los electrones impactan y de la distancia del mu\'on al hilo, que se calcula multiplicando la velocidad de deriva del electr\'on en el tubo por el tiempo de viaje hasta el hilo. \\
 
 El subdetector completo consta de 250 c\'amaras, cada una de ellas con unas dimensiones en promedio de 2 x 2.5 m, formada por de tres capas con unos 60 tubos cada una repartidos en cuatro subcapas. \\
 En la Figura~\ref{fig:CMSsub} se representa gr\'aficamente la posici\'on espacial de las distintas c\'amaras que forman las DTs, que se denotan como MBZ/N/S, donde Z=-2...+2 se corresponde con el n\'umero de rueda a lo largo del eje z, N=1...4 hace referencia al n\'umero de estaci\'on conc\'entrica en el plano xy, y S=1...12 al n\'umero de sector circular. 
@@ -35,7 +45,7 @@ En la Figura~\ref{fig:CMSsub} se representa gr\'aficamente la posici\'on espacia
 
 \subsection{C\'amaras de tiras cat\'odicas: CSCs}\label{sec:CSCs}
 
-Las c\'amaras de tiras cat\'odicas~\cite{CSCperformance} cubren las tapas de CMS (1.2 $< \lvert \eta \rvert <$ 2.4) y su funcionamiento es similar al de las DTs. En este caso se tienen cables de cargados positivamente (\'anodos) cruzados con tiras de de cobre cargadas negativamente (c\'atodos) dentro de un volumen de gas. Cuando los muones atraviesan la c\'amara arrancan electrones de los \'atomos de gas, produci\'endose una avalancha de electrones que se dirigen a los cables del \'anodo, mientras que los iones positivos se alejan del cable y se dirigen al c\'atodo de cobre, lo que tambi\'en induce un pulso de carga en las tiras (en direcci\'on perpendicular al \'anodo). Debido a que las tiras y los cables son perpendiculares, se obtienen dos coordenadas de posici\'on para cada part\'icula que atraviesa la c\'amara. \\
+Las c\'amaras de tiras cat\'odicas~\cite{CSCperformance} se localizan en las tapas de CMS (1.2 $< \lvert \eta \rvert <$ 2.4) y su funcionamiento es similar al de las DTs. En este caso se tienen cables de cargados positivamente (\'anodos) cruzados con tiras de de cobre cargadas negativamente (c\'atodos) dentro de un volumen de gas. Cuando los muones atraviesan la c\'amara arrancan electrones de los \'atomos de gas, produci\'endose una avalancha de electrones que se dirigen a los cables del \'anodo, mientras que los iones positivos se alejan del cable y se dirigen al c\'atodo de cobre, lo que tambi\'en induce un pulso de carga en las tiras (en direcci\'on perpendicular al \'anodo). Debido a que las tiras y los cables son perpendiculares, se obtienen dos coordenadas de posici\'on para cada part\'icula que atraviesa la c\'amara. \\
 
 El subdetector completo de las CSCs contiene 540 c\'amaras en total, y est\'a compuesto de anillos de c\'amaras trapezoidales de hasta 3.4 m de largo y 1.5 m de ancho, colocadas en ocho discos, cuatro en cada tapa. \\
 En este caso, las c\'amaras CSCs se denotan espacialmente como ME$\pm$S/R, donde el signo indica en qu\'e tapa de CMS se encuentra, S=1...4 hace referencia al n\'umero de estaci\'on, paralelas en el eje z (ver Figura~\ref{fig:CMSsub}), y R se corresponde con el n\'umero de anillo, conc\'entricos en el plano xy. En la Figura~\ref{fig:CSC_MEm1} se muestra una imagen real de la rueda ME-1, con sus tres anillos conc\'entricos en el plano xy. \\ \\ 
