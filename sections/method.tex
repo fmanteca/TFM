@@ -24,7 +24,7 @@ En este caso, se usar\'a Pandas, previa transformaci\'on de los datos en formato
 \end{itemize}
 
 
-El proceso l\'ogico de trabajo en cuanto a las herramientas utilizadas y al formato de los datos se muestra en el siguiente diagrama de fases: 
+El proceso l\'ogico de trabajo en cuanto a las herramientas utilizadas y al formato de los datos se muestra en la Figura~\ref{fig:diagram}. 
 
 \begin{center}
 \smartdiagramset{border color=none,
@@ -35,6 +35,8 @@ El proceso l\'ogico de trabajo en cuanto a las herramientas utilizadas y al form
   Selecci\'on de muones y segmentos (c\'odigo \cite{analyzer} en C++ con salida en formato ROOT),
   Tranformaci\'on de ROOT a formato texto (reader.py en \cite{processor}),
   Procesado de datos con Pandas: limpiado y construcci\'on de variables (doStep1.py y step2.py en \cite{processor})}
+\captionof{figure}{Diagrama de fases}
+\label{fig:diagram}        
 \end{center}
 
 
