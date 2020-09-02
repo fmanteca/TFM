@@ -2,38 +2,20 @@
 Una vez obtenida toda la informaci\'on posible del mu\'on a su paso por CMS, el objetivo es entrenar una red neuronal profunda tomando como entrada las propiedades de la traza en el tracker y la informaci\'on espacial de las se\~nales recogidas en el sistema de muones. \\
 En este caso, la funci\'on de p\'erdida a minimizar ser\'a una funci\'on que dependa de la diferencia entre el $p_{T}$ de generaci\'on conocido que se quiere predecir y el valor de $p_{T}$ que devuelve la red, para as\'i aprender las caracter\'isticas de los muones (especialmente de aquellos que emitan cascadas) y hacer regresi\'on a su momento transverso. \\
 
-En cuanto al software, para el entrenamiento se utiliza la librer\'ia de Python de c\'odigo abierto Keras~\cite{chollet2015keras}, que se caracteriza principalmente por ofrecer sencillez de uso para el usuario, y la red se ejecuta sobre TensorFlow~\cite{tensorflow2015-whitepaper}.
-
-
-\subsection{Variables de entrenamiento}\label{sec:variables}
-
-Las variables utilizadas para el entrenamiento se dividen en dos categor\'ias seg\'un su naturaleza:
-
-\begin{itemize}
-\item Caracter\'sticas de la traza interna reconstruida en el tracker: $p_{T}$, $\eta$, $\phi$, carga.
-\item Informaci\'on del conjunto de segmentos recogidos en cada estaci\'on de DTs y CSCs: n\'umero total de segmentos en la estaci\'on, media espacial en x, y, z, desviaci\'on est\'andard en x, y, z, asimetr\'ia en x, y, z, kurtosis en x, y, z.
-\end{itemize}
-
-En la Figura~\ref{fig:train_vars} se muestran las distribuciones de las variables utilizadas en el entrenamiento provenientes de la traza del tracker y de las estaciones de las DTs.
-
-\begin{figure}
-\centering
-\includegraphics[width=1.0\textwidth]{figures/Training_vars_2.png}
-\caption{Distribuciones de las variables de entrenamiento}
-\label{fig:train_vars}        
-\end{figure}
+En cuanto al software, para el entrenamiento se utiliza la librer\'ia de Python de c\'odigo abierto Keras~\cite{chollet2015keras}, que se caracteriza principalmente por ofrecer sencillez de uso para el usuario, y la red se ejecuta sobre TensorFlow. \\
 
 
 \subsection{Conjunto de datos y arquitectura de la red}\label{sec:arch}
 
-El conjunto de datos, compuesto por un total de 195777 muones, se ha dividido en un 80\% para el entrenamiento del modelo (del que un 10\% ser\'a usado como conjunto de datos de validaci\'on), mientras que un 20\% es utilizado para el testeo del mismo. \\
+Para el entrenamiento se han seleccionado los muones de la muestra de simulaci\'on con $p_{T} > $ 200 GeV y con al menos 20 se\~nales encontradas en alguna de las estaciones, de manera que se tenga un indicio de que una cascada electromagn\'etica ha tenido lugar. Adem\'as, por simplicidad, el entrenamiento presentado en este trabajo se llevar\'a a cabo \'unicamente con muones detectados en las DTs ($\lvert \eta \rvert <$ 0.9). \\
+El conjunto de datos resultante, compuesto por un total de 120225 muones, se ha dividido en un 80\% para el entrenamiento del modelo (del que un 10\% ser\'a usado como conjunto de datos de validaci\'on), mientras que un 20\% es utilizado para el testeo del mismo. \\
 
-En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{fully-conected}, donde todos los nodos de cada capa est\'an conectados con los nodos de las capas contiguas, con la siguiente arquitectura:
+En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{fully-conected}, donde todas las neuronas de cada capa est\'an conectadas con las neuronas de las capas contiguas, con la siguiente arquitectura:
 
 
 \begin{itemize}
 
-\item Capa de entrada con 108 neuronas (variables de entrenamiento), un total de 9 capas ocultas con 512, 512, 256, 256, 128, 128, 64, 64 y 16 neuronas respectivamente, y una neurona en la capa de salida.
+\item Capa de entrada con 53 neuronas (variables de entrenamiento), un total de 9 capas ocultas con 512, 512, 256, 256, 128, 128, 64, 64 y 16 neuronas respectivamente, y una neurona en la capa de salida.
 
 \item Activaci\'on: Para las capas 1-10 se utiliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo por tener siempre derivada igual a la unidad y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 11 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al momento transverso.
 
@@ -48,7 +30,7 @@ Donde $n$ se corresponde con el n\'umero de muones de la muestra, ${p_{T}^{GEN}}
 
 \item Descenso del gradiente: para agilizar el apredizaje se hace uso de la t\'ecnica del \textit{mini-batch gradient descent}~\cite{perrone2019optimal}, que consiste en dividir el conjunto de datos de entrenamiento en fragmentos peque\~nos denominados \textit{mini-batches}, de tal forma que los par\'ametros de la red se van actualizando para cada fragmento sin tener que recorrer toda la muestra, mejorando considerablemente la velocidad en el entrenamiento y consiguiendo una convergencia al m\'inimo de la funci\'on de p\'erdida razonablemente buena. El tama\~no del mini-batch elegido ha sido de 2000 muones.
 
-\item Como optimizador se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el descenso del gradiente con momento~\cite{PMID:12662723} y el descenso del gradiente con RMSprop~\cite{tieleman2012lecture}, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
+\item Como optimizador en la b\'usqueda del m\'inimo de la funci\'on de p\'erdida se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el descenso del gradiente con momento~\cite{PMID:12662723} y el descenso del gradiente con RMSprop~\cite{tieleman2012lecture}, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
 
 \item \'Epocas de entrenamiento: 1000.
 
@@ -58,6 +40,26 @@ De esta manera, para cada \'epoca se obtiene el valor del MSE en el conjunto de 
 \end{itemize}
 
 El valor de los hiperpar\'ametros se ha tomado tras probar distintas configuraciones aleatorias de los mismos (b\'usqueda de tipo cuadr\'icula), y se ha elegido aquella que proporciona un MSE menor en el conjunto de datos de testeo.
+
+
+\subsection{Variables de entrenamiento}\label{sec:variables}
+
+Las variables utilizadas para el entrenamiento se dividen en tres categor\'ias seg\'un su naturaleza, dando lugar a un total de 53 variables:
+
+\begin{itemize}
+\item Caracter\'sticas de la traza interna reconstruida en el tracker: $p_{T}$, $\eta$, $\phi$, carga.
+\item Momento transverso dado por la traza seleccionada por el algoritmo TuneP (ver Secci\'on~\ref{sec:TuneP}).
+\item Informaci\'on del conjunto de segmentos recogidos en cada estaci\'on de las DTs: n\'umero total de segmentos en la estaci\'on, media espacial en x, y, z, desviaci\'on est\'andard en x, y, z, asimetr\'ia en x, y, z, kurtosis en x, y, z.
+\end{itemize}
+
+En la Figura~\ref{fig:train_vars} se muestran las distribuciones de las variables utilizadas en el entrenamiento provenientes de la traza del tracker y de las dos primeras estaciones de las DTs.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{figures/Training_vars_2.png}
+\caption{Distribuciones de las variables de entrenamiento provenientes de la traza del tracker y de las dos primeras estaciones de las DTs.}
+\label{fig:train_vars}        
+\end{figure}
 
 
 \clearpage
