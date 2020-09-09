@@ -1,4 +1,15 @@
-Resumen de los resultados \\
+Se ha entrenado un modelo regresivo al momento transverso de muones reconstruidos en el detector CMS trav\'es de una red neuronal profunda, con el fin de mejorar la asignaci\'on de momento transverso proporcionada por los algoritmos actuales de la colaboraci\'on. \\
 
+La DNN es entrenada con una muestra de muones simulados con distribuci\'on plana en $p_{T}$ entre 200 y 2500 GeV, y para cada mu\'on de la muestra toma como entrada el $p_{T}$ dado por el algoritmo TuneP, la informaci\'on de la traza del mu\'on reconstruida en el tracker, y la informaci\'on sobre del n\'umero y distribuci\'on de los segmentos en torno a la extrapolaci\'on de la traza interna a las c\'amaras de muones. \\
 
-Mejoras futuras: incluir CSCs en el entrenamiento, optimzaci\'on de la red. \\
+Los resultados obtenidos muestran una mejora del 26\% en la resoluci\'on del momento (respecto al $p_{T}$ real generado) para los muones con 1200 $\leq p_{T} \leq$ 2000 GeV y $\lvert \eta \rvert <$ 0.9. \\
+
+Entre las posibles v\'ias de ampliaci\'on del trabajo, que se tendr\'an en cuenta en futuros estudios, se encuentran:
+
+\begin{itemize}
+    \item Estudio detallado de la emisi\'on de cascadas electromagn\'eticas en las CSCs y su relaci\'on con el $p_{T}$ del mu\'on.
+    \item Incluir los muones de las CSCs en el modelo regresivo, ya sea con un entrenamiento paralelo al de los muones en las DTs, o idealmente conseguir un ´\'unico entrenamiento con todos los muones (indistintamente de si atraviesan las DTs o las CSCs).
+    \item  Realizar estudios m\'as detallados para caracterizar la emisi\'on de cascadas en funci\'on del momento transverso y as\'i tener una mejor comprensi\'on sobre c\'omo interpreta la DNN esta informaci\'on.
+    \item Optimizaci\'on m\'as precisa de los hiperpar\'ametros de la DNN.
+    \item Estudio e inclusi\'on de nuevas variables en la red puedan ayudar a mejorar la predicci\'on, como el error en el ajuste de la traza seleccionada por el algoritmo TuneP, o la direcci\'on de los segmentos recogidos en las c\'amaras de muones.
+\end{itemize}
