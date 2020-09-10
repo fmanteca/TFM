@@ -6,7 +6,7 @@ En cuanto al software utilizado en el entrenamiento, se hace uso de la librer\'i
 
 \subsection{Conjunto de datos y arquitectura de la red}\label{sec:arch}
 
-Para el entrenamiento se han seleccionado los muones de la muestra de simulaci\'on con $p_{T} > $ 200 GeV. Adem\'as, por simplicidad, el entrenamiento presentado en este trabajo se llevar\'a a cabo \'unicamente con muones detectados en las DTs ($\lvert \eta \rvert <$ 0.9), ya que la emisi\'on de cascadas depende fundamentalmente del momento total del mu\'on $p$, y mientras que en las DTs $p_{T} \approx p$, en las CSCs se tiene que $p_{T} << p$. Por tanto, se requiere un estudio m\'as cuidadoso para entender el proceso de emisi\'on de cascadas en las CSCs a la hora de introducir su informaci\'on en el modelo predictivo. \\
+Para el entrenamiento se han seleccionado los muones de la muestra de simulaci\'on con $p_{T}^{GEN} >$ 200 GeV. Adem\'as, por simplicidad, el entrenamiento presentado en este trabajo se llevar\'a a cabo con muones detectados \'unicamente en las DTs ($\lvert \eta \rvert <$ 0.9), ya que la emisi\'on de cascadas depende fundamentalmente del momento total del mu\'on $p$, y mientras que en las DTs $p_{T} \approx p$, en las CSCs se tiene que $p_{T} << p$. Por tanto, se requiere un estudio m\'as cuidadoso para entender el proceso de emisi\'on de cascadas en las CSCs a la hora de introducir su informaci\'on en el modelo predictivo. \\
 
 El conjunto de datos resultante, compuesto por un total de 321406 muones, se ha dividido en un 80\% para el entrenamiento del modelo (del que un 10\% ser\'a usado como conjunto de datos de validaci\'on), mientras que un 20\% es utilizado para el testeo del mismo. \\
 
@@ -16,7 +16,7 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{full
 
 \item Capa de entrada con 53 neuronas (variables de entrenamiento), un total de 9 capas ocultas con 512, 512, 256, 256, 128, 128, 64, 64 y 16 neuronas respectivamente, y una neurona en la capa de salida.
 
-\item Activaci\'on: Para las capas 1-10 se utiliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo por tener siempre derivada igual a la unidad y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 11 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al momento transverso.
+\item Activaci\'on: Para las capas 1-10 se utiliza la funci\'on de activaci\'on ReLu~\cite{agarap2018deep}, ya que es una de las funciones de activaci\'on m\'as apropiadas para problemas de aprendizaje profundo con gran dimensionalidad por tener siempre derivada igual a la unidad y as\'i evitar el problema del \textit{vanishing gradient}~\cite{Hochreiter:91}. En la \'ultima capa 11 se utiliza una funci\'on de activaci\'on lineal para hacer regresi\'on al momento transverso.
 
 \item Funci\'on de p\'erdida: MSE (del ingl\'es \textit{Mean Squared Error}), que se define como el promedio de los errores al cuadrado de la siguiente manera:
 
@@ -27,7 +27,7 @@ En cuanto al tipo de red utilizada, se ha entrenado una red de tipo \textit{full
 
 Donde $n$ se corresponde con el n\'umero de muones de la muestra, ${p_{T}^{GEN}}_i$ hace referencia al momento transverso generado del mu\'on $i$, y ${p_{T}^{PRED}}_i$ al momento transverso que predice la red para el mismo. 
 
-\item Descenso del gradiente: para agilizar el aprendizaje se hace uso de la t\'ecnica del \textit{mini-batch gradient descent}~\cite{perrone2019optimal}, que consiste en dividir el conjunto de datos de entrenamiento en fragmentos peque\~nos denominados \textit{mini-batches}, de tal forma que los par\'ametros de la red se van actualizando para cada fragmento sin tener que recorrer toda la muestra, mejorando considerablemente la velocidad en el entrenamiento y consiguiendo una convergencia al m\'inimo de la funci\'on de p\'erdida razonablemente buena. El tama\~no del mini-batch elegido ha sido de 1000 muones.
+\item Descenso del gradiente: para agilizar el aprendizaje se hace uso de la t\'ecnica del \textit{mini-batch gradient descent}~\cite{perrone2019optimal}, que consiste en dividir el conjunto de datos de entrenamiento en fragmentos peque\~nos denominados \textit{mini-batches}, de tal forma que los par\'ametros de la red se van actualizando para cada fragmento sin tener que recorrer toda la muestra, mejorando considerablemente la velocidad en el entrenamiento y consiguiendo una convergencia al m\'inimo de la funci\'on de p\'erdida razonablemente buena. El tama\~no del \textit{mini-batch} elegido ha sido de 1000 muones.
 
 \item Como optimizador en la b\'usqueda del m\'inimo de la funci\'on de p\'erdida se usa Adam (del ingl\'es \textit{Adaptative Moment estimation}), que combina el descenso del gradiente con momento~\cite{PMID:12662723} y el descenso del gradiente con RMSprop~\cite{tieleman2012lecture}, con tasa de aprendizaje = 0.0005 y el resto de hiperpar\'ametros los recomendados por el art\'iculo original de Adam~\cite{Kingma2015AdamAM}.
 

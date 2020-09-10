@@ -1,5 +1,5 @@
 
-El detector CMS, representado de manera esquem\'atica en la Figura~\ref{fig:CMS}, se localiza en uno de los puntos del acelerador LHC donde se hacen colisionar los haces de protones. Est\'a compuesto, de la zona m\'as interna a la m\'as externa, por un tracker de p\'ixeles y tiras de silicio para la detecci\'n de partículas cargadas con gran resoluci\'on espacial, un calor\'metro electromagn\'etico de cristal de tungstato (ECAL) para la medida de electrones y fotones principalmente, un calor\'imetro hadr\'onico constituido de material denso y absorbente (HCAL) especializado en la medida de hadrones, y finalmente, en la parte m\'as externa se encuentran las c\'amaras de muones. Entre el HCAL y las c\'amaras de muones se tiene un im\'an superconductor que alcanza un campo magn\'etico de 3.8 T, suficiente para curvar part\'iculas cargadas y permitir una buena resoluci\'on en la medida del momento de las mismas.
+El detector CMS, representado de manera esquem\'atica en la Figura~\ref{fig:CMS}, se localiza en uno de los puntos del acelerador LHC donde se hacen colisionar los haces de protones. Est\'a compuesto, de la zona m\'as interna a la m\'as externa, por un tracker de p\'ixeles y tiras de silicio para la detecci\'on de partículas cargadas con gran resoluci\'on espacial, un calor\'metro electromagn\'etico de cristal de tungstato (ECAL) para la medida de electrones y fotones principalmente, un calor\'imetro hadr\'onico constituido de material denso y absorbente (HCAL) especializado en la medida de hadrones, y finalmente, en la parte m\'as externa se encuentran las c\'amaras de muones. Entre el HCAL y las c\'amaras de muones se tiene un im\'an superconductor que alcanza un campo magn\'etico de 3.8 T, suficiente para curvar part\'iculas cargadas y permitir una buena resoluci\'on en la medida del momento de las mismas.
 
 \begin{figure}[h]
 \centering
@@ -27,30 +27,31 @@ En las siguientes subsecciones se describir\'a brevemente el funcionamiento y ca
 
 El tracker~\cite{trackerperformance} se situa en la parte m\'as interna de CMS y est\'a formado por p\'ixeles, que se sit\'uan en el n\'ucleo del subdetector y reciben por tanto la mayor fluencia de part\'iculas, y por tiras de silicio que rodean las capas de p\'ixeles (ver Figura~\ref{fig:tracker}). \\ 
 
-A medida que las part\'iculas viajan a trav\'es del tracker, los p\'ixeles y las tiras producen peque\~nas se\~nales el\'ectricas que se amplifican y detectan. En cuanto a su composici\'on, el tracker cuenta con un total de 75 millones de canales electr\'onicos, dando lugar a unas 6000 conexiones por cent\'imetro cuadrado que permiten medir las trayectorias de las part\'iculas cargadas con una precisi\'on de unos 10 $\mu$m. \\
+A medida que las part\'iculas viajan a trav\'es del tracker, los p\'ixeles y las tiras producen peque\~nas se\~nales el\'ectricas que se amplifican y detectan. \\
+En cuanto a su composici\'on, el tracker cuenta con un total de 75 millones de canales electr\'onicos, dando lugar a unas 6000 conexiones por cent\'imetro cuadrado que permiten medir las trayectorias de las part\'iculas cargadas con una precisi\'on de unos 10 $\mu$m. \\
 Cabe destacar que debido a que el tracker est\'a compuesto por un material relativamente ligero como es el silicio, la probabilidad de que los muones produzcan una cascada electromagn\'etica en esta zona del detector es muy baja.  \\
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{figures/Phase1_Tracker_1Quarter.png}
-\caption{Cuadrante del tracker de CMS en el plano r-z. El detector de p\'ixeles se muestra en verde, mientras que los m\'odulos de tiras de una cara y de dos caras se muestran como segmentos rojos y azules respectivamente. Imagen tomada de \cite{trackerplot}.}
+\caption{Cuadrante del tracker de CMS en el plano r-z, donde r hace referencia a la distancia radial en el plano x-y. El detector de p\'ixeles se muestra en verde, mientras que los m\'odulos de tiras de una cara y de dos caras se muestran como segmentos rojos y azules respectivamente. Imagen tomada de \cite{trackerplot}.}
 \label{fig:tracker}
 \end{figure}
 
 
 \subsection{Tubos de deriva: DTs}\label{sec:DTs}
 
-Los tubos de deriva~\cite{DTperformance} cubren el barril de CMS ($\lvert \eta \rvert <$ 0.9) en la parte m\'as externa del detector. \\
-Cada tubo se compone de un hilo colector de carga cargado positivamente y est\'a lleno de gas, de forma que una part\'icula cargada a su paso por el tubo arranca electrones de los \'atomos del gas, que son atra\'idos el\'ectricamente y recolectados por el hilo conductor. De esta manera, se obtienen las coordenadas del paso del mu\'on por el tubo a partir de la posici\'on del hilo donde los electrones impactan y de la distancia del mu\'on al hilo, que se calcula multiplicando la velocidad de deriva del electr\'on en el tubo por el tiempo de viaje hasta el hilo. \\
+Los tubos de deriva~\cite{DTperformance} cubren el barril de CMS ($\lvert \eta \rvert <$ 1.2) en la parte m\'as externa del detector. \\
+Cada tubo se compone de un hilo colector cargado positivamente y est\'a lleno de gas, de forma que una part\'icula cargada a su paso por el tubo arranca electrones de los \'atomos del gas y estos son atra\'idos el\'ectricamente y recolectados por el hilo colector. De esta manera, se obtienen las coordenadas del paso del mu\'on por el tubo a partir de la posici\'on del hilo donde los electrones impactan y de la distancia del mu\'on al hilo, que se calcula multiplicando la velocidad de deriva del electr\'on en el tubo por el tiempo de viaje hasta el hilo. \\
 
-El subdetector completo consta de 250 c\'amaras, cada una de ellas con unas dimensiones en promedio de 2 x 2.5 m, estando compuestas por tres capas con unos 60 tubos repartidos en cuatro subcapas. \\
+En la Figura~\ref{fig:CMSsub} se representa gr\'aficamente la posici\'on espacial de las distintas c\'amaras que forman las DTs, que se denotan como MBZ/N/S, donde Z=-2...+2 se corresponde con el n\'umero de rueda a lo largo del eje z, N=1...4 hace referencia al n\'umero de estaci\'on conc\'entrica en el plano x-y, y S=1...12 al n\'umero de sector circular. \\
 
-En la Figura~\ref{fig:CMSsub} se representa gr\'aficamente la posici\'on espacial de las distintas c\'amaras que forman las DTs, que se denotan como MBZ/N/S, donde Z=-2...+2 se corresponde con el n\'umero de rueda a lo largo del eje z, N=1...4 hace referencia al n\'umero de estaci\'on conc\'entrica en el plano xy, y S=1...12 al n\'umero de sector circular. 
+El subdetector completo consta de 250 c\'amaras, cada una de ellas con unas dimensiones en promedio de 2 x 2.5 m. Las c\'amaras de las tres primeras estaciones m\'as internas est\'an compuestas por tres capas con unos 60 tubos por capa, de manera que una de ellas mide se\~nales en el plano r-z y las otras dos lo hacen en el plano r-$\phi$ (donde r hace referencia a la distancia radial en el plano x-y). La \'ultima estaci\'on est\'a formada \'unicamente por dos capas de tubos orientadas en el plano r-$\phi$, por lo que la coordenada z no se mide en esta estaci\'on m\'as externa. \\
 
 \subsection{C\'amaras de tiras cat\'odicas: CSCs}\label{sec:CSCs}
 
-Las c\'amaras de tiras cat\'odicas~\cite{CSCperformance} se localizan en las tapas de CMS (1.2 $< \lvert \eta \rvert <$ 2.4) y su funcionamiento es similar al de las DTs. \\
-En este caso se tienen cables de cargados positivamente (\'anodos) cruzados con tiras de de cobre cargadas negativamente (c\'atodos) dentro de un volumen de gas. Cuando los muones atraviesan la c\'amara arrancan electrones de los \'atomos de gas, produci\'endose una avalancha de electrones que se dirigen a los cables del \'anodo, mientras que los iones positivos se alejan del cable y se dirigen al c\'atodo de cobre, lo que tambi\'en induce un pulso de carga en las tiras (en direcci\'on perpendicular al \'anodo). Debido a que las tiras y los cables son perpendiculares, se obtienen dos coordenadas de posici\'on para cada part\'icula que atraviesa la c\'amara. \\
+Las c\'amaras de tiras cat\'odicas~\cite{CSCperformance} se localizan en las tapas de CMS (0.9 $< \lvert \eta \rvert <$ 2.4) y su funcionamiento es similar al de las DTs. \\
+En este caso se tienen cables de cargados positivamente (\'anodos) cruzados con tiras de cobre cargadas negativamente (c\'atodos) dentro de un volumen de gas. Cuando los muones atraviesan la c\'amara arrancan electrones de los \'atomos de gas, produci\'endose una avalancha de electrones que se dirigen a los cables del \'anodo, mientras que los iones positivos se alejan del cable y se dirigen al c\'atodo de cobre, lo que tambi\'en induce un pulso de carga en las tiras (en direcci\'on perpendicular al \'anodo). Debido a que las tiras y los cables son perpendiculares, se obtienen dos coordenadas de posici\'on para cada part\'icula que atraviesa la c\'amara. \\
 
 \begin{figure}[h]
 \centering
@@ -61,8 +62,8 @@ En este caso se tienen cables de cargados positivamente (\'anodos) cruzados con 
 
 
 El subdetector completo de las CSCs contiene 540 c\'amaras en total, y est\'a compuesto de anillos de c\'amaras trapezoidales de hasta 3.4 m de largo y 1.5 m de ancho, colocadas en ocho discos, cuatro en cada tapa. \\
-En este caso, las c\'amaras CSCs se denotan espacialmente como ME$\pm$S/R, donde el signo indica en qu\'e tapa de CMS se encuentra, S=1...4 hace referencia al n\'umero de estaci\'on (paralelas en el eje z), y R se corresponde con el n\'umero de anillo, conc\'entricos en el plano xy  (ver Figura~\ref{fig:CMSsub}). \\
-En la Figura~\ref{fig:CSC_MEm1} se muestra una imagen real de la rueda ME-1, con sus tres anillos conc\'entricos en el plano xy. \\ 
+En este caso, las c\'amaras CSCs se denotan espacialmente como ME$\pm$S/R, donde el signo indica en qu\'e tapa de CMS se encuentra, S=1...4 hace referencia al n\'umero de estaci\'on (paralelas en el eje z), y R se corresponde con el n\'umero de anillo, conc\'entricos en el plano x-y. \\
+En la Figura~\ref{fig:CSC_MEm1} se muestra una imagen real de la rueda ME-1, con sus tres anillos conc\'entricos en el plano x-y. \\ 
 
 \begin{figure}
 \centering
@@ -75,7 +76,7 @@ En la Figura~\ref{fig:CSC_MEm1} se muestra una imagen real de la rueda ME-1, con
 
 \subsection{Segmentos en las c\'amaras de muones}
 
-Cada una de las c\'amaras de DTs y CSCs se compone de varias capas, y las se\~nales o impactos que dejan los muones a su paso se reconstruyen en cada cada de ellas. A partir de estos impactos, se construyen trazas rectas denominadas segmentos uniendo las se\~nales encontradas en las distintas capas dentro de cada c\'amara DT o CSC. Estos segmentos est\'an formados por la posici\'on y direcci\'on tanto en el plano transverso como en el coordenada longitudinal, salvo para las c\'amaras DT m\'as exteriores, en las que la informaci\'on longitudinal no est\'a disponible. \\
+Cada una de las c\'amaras de DTs y CSCs se compone de varias capas, y las se\~nales o impactos que dejan los muones a su paso se reconstruyen en cada cada de ellas. A partir de estos impactos, se construyen peque\~nas trazas rectas denominadas segmentos uniendo las se\~nales encontradas en las distintas capas dentro de cada c\'amara DT o CSC. Estos segmentos est\'an formados por la posici\'on y direcci\'on tanto en el plano transverso como en el coordenada longitudinal, salvo para las c\'amaras DTs m\'as externas (en la estaci\'on 4), en las que la informaci\'on longitudinal no est\'a disponible. \\
 De esta manera, como se detallar\'a en las sucesivas secciones, se utilizar\'an en el an\'alisis los segmentos que los muones dejan a su paso por las distintas c\'amaras.
 
 \clearpage

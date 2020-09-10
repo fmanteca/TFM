@@ -20,8 +20,8 @@ En la Figura~\ref{fig:test_ptpred_tuneppt_genpt} se muestran sendas distribucion
 \label{fig:test_ptpred_tuneppt_genpt}  
 \end{figure}
 
-Por otra parte, en la Figura~\ref{fig:R_vs_genpt} se compara la dependencia del promedio y de desviaci\'on est\'andar de la distribuci\'on de $R$~\eqref{eq:R} que se obtiene con el $p_{T}$ dado con el algoritmo TuneP y con el $p_{T}$ predicho con la DNN respectivamente en funci\'on del $p_{T}$ de generaci\'on para los muones del conjunto de datos de testeo. \\
-Se observa cualitativamente que la respuesta de la DNN es aproximadamente plana para muones con $p_{T} > 1200$ GeV, mientras que cuando se toma el $p_{T}$ del algoritmo TuneP la asignaci\'on del momento transverso se va degradando progresivamente con el $p_{T}$ generado. El hecho de que la resoluci\'on se aplane para valores altos del $p_{T}$ indica que la DNN es capaz de aprender la forma de las cascadas como funci\'on del $p_{T}$, reduciendo as\'i la dependencia natural del aumento en la resoluci\'on con el $p_{T}$ debida a la medida de saggita. \\
+Por otra parte, en la Figura~\ref{fig:R_vs_genpt} se muestra la dependencia del promedio y de la desviaci\'on est\'andar de la distribuci\'on de $R$ con el $p_{T}$ de generaci\'on para los muones del conjunto de datos de testeo, comparando en ambos casos los resultados que se obtienen al introducir en~\eqref{eq:R} el $p_{T}$ dado por el algoritmo TuneP, y el $p_{T}$ predicho por la DNN. \\
+Se observa cualitativamente que la respuesta de la DNN es aproximadamente plana para los muones con $p_{T} > 1200$ GeV, mientras que cuando se toma el $p_{T}$ proporcionado por el algoritmo TuneP la asignaci\'on del momento transverso se va degradando progresivamente conforme aumenta el $p_{T}$ de generaci\'on. El hecho de que la resoluci\'on se aplane para valores altos del $p_{T}$ indica que la DNN es capaz de aprender la forma de las cascadas como funci\'on del momento transverso, reduciendo as\'i la dependencia natural del aumento en la resoluci\'on con el $p_{T}$ debida a la medida de saggita. \\
 
 \begin{figure}[h]
 \centering
@@ -31,7 +31,7 @@ Se observa cualitativamente que la respuesta de la DNN es aproximadamente plana 
 \label{fig:R_vs_genpt}        
 \end{figure}
 
-A la hora de cuantificar los resultados obtenidos ha de tenerse en cuenta que la red ha sido alimentada con muones generados con un valor m\'aximo para el $p_{T}$ de 2500 GeV, por tanto es natural pensar que el modelo va a tender a asignar un $p_{T}$ igual o menor a este valor m\'aximo a los muones cuyo $p_{T}$ sea cercano a 2500 GeV. Por este motivo, y para tener resultados m\'as coherentes, la evaluaci\'on del m\'etodo se har\'a con muones con momento transverso generado en el rango 1200 $\leq p_{T} \leq$ 2000 GeV. \\
+A la hora de cuantificar los resultados obtenidos ha de tenerse en cuenta que la red ha sido alimentada con muones generados con un valor m\'aximo para el $p_{T}$ de 2500 GeV, por tanto es natural pensar que el modelo va a tender a asignar un momento transverso igual o menor a este valor m\'aximo a los muones cuyo $p_{T}$ sea cercano a 2500 GeV. Por este motivo, y para tener resultados m\'as coherentes, la evaluaci\'on del m\'etodo se har\'a con muones con momento transverso generado en el rango 1200 $\leq p_{T} \leq$ 2000 GeV. \\
 
 Para este rango de $p_{T}$, se obtiene un valor para la desviaci\'on est\'andar de $R$ en el conjunto de muones de testeo de $\sigma_{R_{TuneP}}$ = 0.061 usando el $p_{T}$ del algoritmo TuneP, y de $\sigma_{R_{pred}}$ = 0.045 usando el $p_{T}$ predicho por el modelo de regresi\'on. Por tanto, el m\'etodo implementado en este trabajo consigue una mejora en la resoluci\'on de la asignaci\'on del momento transverso de un 26\% respecto al momento transverso proporcionado por CMS. \\
 

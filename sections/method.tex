@@ -1,6 +1,6 @@
-Este trabajo persigue implementar un algoritmo regresivo usando una DNN para predecir el momento transverso de muones de alto momento, intentando mejorar los algoritmos actuales de CMS. \\
+Este trabajo persigue implementar un algoritmo regresivo usando una DNN para predecir el momento transverso de muones de alto-$p_{T}$, intentando mejorar la asignaci\'on de $p_{T}$ proporcionada por los algoritmos actuales de CMS. \\
 
-Puesto que parte de los problemas de reconstrucci\'on de este tipo de muones tiene que ver con la alta probabilidad de producci\'on de cascadas electromag\'eticas y por consiguiente la alta multiplicidad de segmentos en el sistema de muones, la propuesta tiene como elemento clave la distribuci\'on espacial de segmentos en las c\'amaras de muones. En particular, cada elemento del conjunto de datos utilizados en este estudio estar\'a compuesto por el $p_{T}$ proporcionado por el algoritmo TuneP, la informaci\'on de la traza del mu\'on reconstruida \'unicamente en el tracker, as\'i como sus extrapolaciones al sistema de muones, junto con informaci\'on acerca del n\'umero y distribuci\'on de los segmentos encontrados en torno a dichas extrapolaciones. \\
+Puesto que parte de los problemas de reconstrucci\'on de este tipo de muones tiene que ver con la alta probabilidad de producci\'on de cascadas electromag\'eticas y por consiguiente la alta multiplicidad de segmentos en el sistema de muones, la propuesta tiene como elemento clave el estudio de la  distribuci\'on espacial de segmentos en las c\'amaras de muones. En particular, cada elemento del conjunto de datos utilizados en este estudio estar\'a compuesto por el $p_{T}$ proporcionado por el algoritmo TuneP, la informaci\'on de la traza del mu\'on reconstruida \'unicamente en el tracker, as\'i como sus extrapolaciones al sistema de muones, junto con informaci\'on acerca del n\'umero y distribuci\'on de los segmentos encontrados en torno a dichas extrapolaciones. \\
 
 En la presente secci\'on se detallar\'an las herramientas y metodolog\'ia utilizadas para la extracci\'on y tratamiento de los datos.
 
@@ -11,7 +11,7 @@ Las herramientas utilizadas en este trabajo cumplen diversas funciones, pasando 
 
 \begin{itemize}
 
-\item Pythia~\cite{Sjstrand2008ABI} es un generador de Monte-Carlo que tiene como objetivo proporcionar todos los elementos necesarios para la simulaci\'on de eventos fruto de la colisi\'on de part\'iculas en condiciones de alta energ\'ia como las del LHC. Concretamente, se utilizar\'a Pythia para generar una muestra representativa de muones de alto momento de la que emerger\'a la muestra de entrenamiento y testeo. Las macroinstrucciones usadas para la producci\'on de la muestra se pueden encontrar en el repositorio~\cite{generator}.
+\item Pythia~\cite{Sjstrand2008ABI} es un generador de Monte-Carlo que tiene como objetivo proporcionar todos los elementos necesarios para la simulaci\'on de eventos fruto de la colisi\'on de part\'iculas en condiciones de alta energ\'ia como las del LHC. Concretamente, se utilizar\'a Pythia para generar una muestra representativa de muones de alto momento de la que emerger\'an las muestras de entrenamiento y testeo de la DNN. Las macroinstrucciones usadas para la producci\'on de la muestra se pueden encontrar en el repositorio~\cite{generator}.
 
 \item CMSSW~\cite{cmssw} es una colecci\'on de software abierto de la colaboraci\'on CMS basado en C++ y Pythia utilizado principalmente para la simulaci\'on, calibraci\'on, alineamiento, y reconstrucci\'on de objetos f\'isicos (como los muones a partir de sus segmentos y trazas). CMSSW a su vez utiliza Geant4~\cite{Agostinelli:2002hh}, que es el programa encargado de simular el comportamiento de las partículas a su paso por el detector. \\
 Para este trabajo se ha creado un m\'odulo en C++ que puede encontrarse en \cite{analyzer}. Este c\'odigo utiliza diferentes herramientas de CMSSW para realizar la selecci\'on apropiada de muones y segmentos que se describir\'a en la subsecci\'on~\ref{sec:selection}. 
@@ -68,14 +68,14 @@ El proceso de selecci\'on de los muones y segmentos, as\'i como de la producci\'
 
 \item Lectura de datos: en los datos de entrada, los muones y segmentos reconstruidos por evento se almacenan en colecciones de ROOT, que funcionan a modo de contenedor de informaci\'on. Por tanto, el primer paso es leer las colecciones para poder iterar sobre ellas. 
 
-\item Se recorre la colecci\'on de muones y se seleccionan aquellos que tengan una traza reconstruida en el tracker con $p_{T} >$ 200 GeV, y se requiere que esta traza reconstruida est\'e pr\'oxima a la traza real generada del mu\'on dentro de un cono de radio $\Delta$R = $\sqrt{(\Delta\eta^{2}+\Delta\phi^{2})} <$  0.3. De esta forma se pretende garantizar que el mu\'on generado coincida exactamente con la traza considerada.
+\item Se recorre la colecci\'on de muones y se seleccionan aquellos que tengan una traza reconstruida en el tracker con $p_{T} >$ 200 GeV, y se requiere que esta traza est\'e pr\'oxima a la traza real generada del mu\'on dentro de un cono de radio $\Delta$R = $\sqrt{(\Delta\eta^{2}+\Delta\phi^{2})} <$  0.3. De esta forma se pretende garantizar que el mu\'on generado coincida exactamente con la traza considerada.
 
 \item Posteriormente, se recorren las colecciones de segmentos encontradas en el suceso, y se almacenan sus coordenadas y los identificadores de los detectores en los que se encuentran en caso de que los segmentos sean v\'alidos\footnote{Que son compatibles con la trayectoria inicial de la traza, y con un $\chi$\textsuperscript{2} del ajuste de las se\~nales que componen el segmento no muy elevado.}, y sus coordenadas se hayan medido correctamente.
 
 \item Se selecciona la posici\'on m\'as externa de la traza del tracker y se extrapola a la superficie de cada una de las c\'amaras de muones registradas donde se ha encontrado al menos un segmento. \\
 El proceso de extrapolaci\'on se lleva a cabo utilizando un software especializado que integra la trayectoria de los muones aplicando la ley de Lorentz y teniendo en cuenta sus interacciones con el material de los detectores, como la ionizaci\'on o la dispersi\'on m\'ultiple Coulombiana.
 
-\item Se seleccionan aquellas extrapolaciones que son v\'alidas (compatibles con la direcci\'on de la trayectoria inicial), vayan en la direcci\'on del campo magn\'etico impuesto por el solenoide de CMS, y cumplan que la distancia entre el centro de la c\'amara y la propia extrapolaci\'on no exceda el tama\~no propio de la c\'amara. Este \'ultimo requerimiento es de vital importancia, ya que las superficies a las que se extrapola son planos de dimensi\'on infinita (sin delimitar por las dimensiones reales de las c\'amaras), y una part\'icula cargada en movimiento sometida a un campo magn\'etico siempre puede cortar un plano de dimensi\'on infinita al curvarse.
+\item De todos los segmentos guardados en el paso 3, se seleccionan aquellos que se encuentren en c\'amaras donde las extrapolaciones son v\'alidas (compatibles con la direcci\'on de la trayectoria inicial), vayan en la direcci\'on del campo magn\'etico impuesto por el solenoide de CMS, y cumplan que la distancia entre el centro de la c\'amara y la propia extrapolaci\'on no exceda el tama\~no propio de la c\'amara. Este \'ultimo requerimiento es de vital importancia, ya que las superficies a las que se extrapola son planos de dimensi\'on infinita (sin delimitar por las dimensiones reales de las c\'amaras), y una part\'icula cargada en movimiento sometida a un campo magn\'etico siempre puede cortar un plano de dimensi\'on infinita al curvarse.
 
 \item Se guardan todas las variables de inter\'es como objetos de ROOT, es decir, la informaci\'on sobre la traza del mu\'on en el tracker, las coordenadas y direcciones de los segmentos recogidos, y las coordenadas de las extrapolaciones.
 \end{enumerate}
@@ -113,7 +113,8 @@ Para la construcci\'on de las variables que ser\'an utilizadas en el entrenamien
 
 Tras la obtenci\'on de la muestra que ser\'a utilizada para el entrenamiento y testeo de la DNN, se han realizado varias comprobaciones para asegurar su calidad y coherencia. \\
 
-En primer lugar, se seleccionan muones con cuatro o m\'as segmentos en las DTs o CSCs y exigiendo que tengan al menos un segmento en cada estaci\'on. Esta submuestra contiene trazas de muones que pueden considerarse completas. Posteriormente, se separan los muones que cumplan estas condiciones en dos categor\'ias: aquellos que tienen exactamente cuatro segmentos (uno en cada estaci\'on), y aquellos que tienen m\'as de cuatro segmentos. Los muones pertenecientes a la segunda categor\'ia son susceptibles de haber emitido una cascada electromagn\'etica. De esta manera, si para cada mu\'on se selecciona el m\'aximo valor de distancia entre el segmento y la propagaci\'on, uno esperar\'ia encontrar valores relativamente bajos en la primera categor\'ia, y valores m\'as altos en la segunda, debido a la presencia de segmentos adicionales. \\
+En primer lugar, se seleccionan muones con cuatro o m\'as segmentos en las DTs o CSCs, y se exige que estos tengan al menos un segmento en cada estaci\'on. Esta submuestra contiene trazas de muones que pueden considerarse completas. \\
+Posteriormente, se separan los muones que cumplan estas condiciones en dos categor\'ias: aquellos que tienen exactamente cuatro segmentos (uno en cada estaci\'on), y aquellos que tienen m\'as de cuatro segmentos, de forma que los muones pertenecientes a la segunda categor\'ia son susceptibles de haber emitido una cascada electromagn\'etica. De esta manera, si para cada mu\'on se selecciona el m\'aximo valor de distancia entre el segmento y la extrapolaci\'on de entre todos los pares segmento-extrapolaci\'on que lo componen, uno esperar\'ia encontrar valores relativamente bajos en la primera categor\'ia, y valores m\'as altos en la segunda, debido a la presencia de segmentos adicionales. \\
 Las distribuciones para ambos grupos se muestran en la Figura~\ref{fig:data_dist}. \\
 
 \begin{figure}[h]
@@ -136,7 +137,7 @@ De nuevo se observa la tendencia ascendente acorde con lo esperado. \\
 \centering
 \includegraphics[width=0.45\textwidth]{figures/data_genpt_DT_MeanNSegments.png}
 \includegraphics[width=0.45\textwidth]{figures/data_genpt_CSC_MeanNSegments.png}
-\caption{Valor medio de segmentos encontrados por mu\'on en funci\'on del momento transverso generado, donde la incertidumbre en el eje de abscisas se corresponde con la desviación est\'andar de la distribuci\'on del n\'umero de segmentos por bin de $p_{T}$ dividida entre la ra\'iz cuadrada de n\'umero de muones en cada bin. Izquierda: Segmentos en las DTs. Derecha: Segmentos en las CSCs.}
+\caption{Valor medio de segmentos encontrados por mu\'on en funci\'on del momento transverso generado, donde la incertidumbre en el eje de abscisas se corresponde con la desviación est\'andar de la distribuci\'on del n\'umero de segmentos por bin de $p_{T}$ dividida entre la ra\'iz cuadrada del n\'umero de muones en cada bin. Izquierda: Segmentos en las DTs. Derecha: Segmentos en las CSCs.}
 \label{fig:data_nSegmentsMean}        
 \end{figure}
 
@@ -144,19 +145,19 @@ De nuevo se observa la tendencia ascendente acorde con lo esperado. \\
 \centering
 \includegraphics[width=0.45\textwidth]{figures/data_genpt_DT_MeanNshowers.png}
 \includegraphics[width=0.45\textwidth]{figures/data_genpt_CSC_MeanNshowers.png}
-\caption{Valor medio del n\'umero de cascadas en funci\'on del momento transverso generado, donde la incertidumbre en el eje de abscisas se corresponde con la desviación est\'andar de la distribuci\'on del n\'umero de cascadas por bin de $p_{T}$ dividida entre la ra\'iz cuadrada de n\'umero de muones en cada bin. Izquierda: Promedio de cascadas por mu\'on en las DTs. Derecha: Promedio de cascadas por mu\'on en las CSCs.}
+\caption{Valor medio del n\'umero de cascadas en funci\'on del momento transverso generado, donde la incertidumbre en el eje de abscisas se corresponde con la desviación est\'andar de la distribuci\'on del n\'umero de cascadas por bin de $p_{T}$ dividida entre la ra\'iz cuadrada del n\'umero de muones en cada bin. Izquierda: Promedio de cascadas por mu\'on en las DTs. Derecha: Promedio de cascadas por mu\'on en las CSCs.}
 \label{fig:data_nShowersMean_genpt}        
 \end{figure}
 
 \clearpage
 
-Por \'ultimo, en la Figura~\ref{fig:data_R_genpt} se muestra la dependencia de la desviaci\'on est\'andar y del promedio de $R$~\eqref{eq:R} con el $p_{T}$ de generaci\'on para muones en las DTs. Puede observarse que la asignaci\'on de momento transverso se va degradando con el $p_{T}$ seg\'un lo esperado. \\
+Por \'ultimo, en la Figura~\ref{fig:data_R_genpt} se muestra la dependencia de la desviaci\'on est\'andar y del promedio de $R$~\eqref{eq:R} con el $p_{T}$ de generaci\'on para los muones detectados en las DTs ($\lvert \eta \rvert <$ 0.9). Puede observarse que la asignaci\'on de momento transverso se va degradando con el $p_{T}$ seg\'un lo esperado. \\
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.45\textwidth]{figures/data_genpt_DT_sigmaR.png}
 \includegraphics[width=0.45\textwidth]{figures/data_genpt_DT_R.png}
-\caption{Dependencia de la desviaci\'on est\'andar y del valor medio de $R$ con el $p_{T}$ de generaci\'on para muones con $\lvert \eta \rvert <$ 0.9. Izquierda: Desviaci\'on est\'andar de $R$ en el eje de abscisas. Derecha: Valor medio de R en funci\'on en el eje de abscisas, donde la incertidumbre se corresponde con la desviación est\'andar de la distribuci\'on de R por bin de $p_{T}$ dividida entre la ra\'iz cuadrada de n\'umero de muones en cada bin.}
+\caption{Dependencia de la desviaci\'on est\'andar y del valor medio de $R$ con el $p_{T}$ de generaci\'on para muones con $\lvert \eta \rvert <$ 0.9. Izquierda: Desviaci\'on est\'andar de $R$ en el eje de abscisas. Derecha: Valor medio de R en funci\'on en el eje de abscisas, donde la incertidumbre se corresponde con la desviación est\'andar de la distribuci\'on de R por bin de $p_{T}$ dividida entre la ra\'iz cuadrada del n\'umero de muones en cada bin.}
 \label{fig:data_R_genpt}        
 \end{figure}
 
